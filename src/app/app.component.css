@@ -1,0 +1,90 @@
+.mainContainer{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.header{
+    min-height: 60px;
+    width: 100%;
+    position: fixed;
+    background-color: white;
+    z-index: 10;
+}
+
+.header .navbar{
+    height: 60px;
+    box-shadow: 0px 3px 10px 0px rgb(0 0 0 / 15%);
+}
+
+.nav-logo{
+    margin-left: 10px;
+}
+
+.nav-user{
+    margin-right: 10px;
+}
+
+/* Main Section */
+.container{
+    min-width: 100%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    background-color: #e1e7e9;
+    margin-top: 60px !important;
+}
+
+/* Side bar */
+.container .sidebar{
+    width: 20%;
+    height: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+.sidebar .files{
+    margin-top: 14px;
+}
+
+.sidebar .files ul li{
+    list-style: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.sidebar .files ul{
+    padding-left: 15px;
+}
+
+.files ul li a{
+    text-decoration: none;
+    color: black;
+    font-size: 17px;
+}
+
+.files ul li a .fa-file{
+    margin-right: 8px;
+}
+
+.files ul li a .fa-download{
+    margin-right: 8px;
+}
+
+.remaining{
+    width: 80%;
+}
+
+.remaining-login{
+    width: 100%;
+}
+
+.loginContainer{
+    margin-top: 0px !important;
+}

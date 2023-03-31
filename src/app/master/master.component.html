@@ -1,0 +1,52 @@
+<div class="main-section">
+    <div class="main-section-header">
+        Shreeji
+    </div>
+
+    <div class="main-body">
+
+        <div class="stone-box">
+            
+            <div class="machine-table">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="border-top-left-radius: 15px; border-top: none;">Tender Name</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Buy</th>
+                            <th scope="col">Stone Id</th>
+                            <th scope="col">Stone Weight</th>
+                            <th scope="col">Stone FL</th>
+                            <th scope="col">Tention</th>
+                            <th scope="col" style="border-top-right-radius: 15px; border-top: none;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let product of productList; let i = index">
+                            <td scope="col" style="border-top-left-radius: 15px; border-top: none;">{{product.TenderName}}</td>
+                            <td scope="col">{{product.Date | date:'dd-mm-yyyy'}}</td>
+                            <td scope="col">{{product.time}}</td>
+                            <td scope="col">Buy</td>
+                            <td scope="col">{{product.stoneId}}</td>
+                            <td scope="col">{{product.stoneWeight}}</td>
+                            <td scope="col">{{product.stoneFL}}</td>
+                            <td scope="col">{{product.tention}}</td>
+                            <td>
+                                <div class="icons">
+                                    <a (click)="viewProduct(product)" style="margin-right: 8px;">
+                                        <i class="fa-solid fa-eye cursor-pointer" style="color: green;"></i>
+                                    </a>
+                                    <a (click)="deleteProduct(product)">
+                                        <i class="fa-solid fa-trash cursor-pointer" style="color:#ff4c52;"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>

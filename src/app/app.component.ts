@@ -7,4 +7,20 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'diamond';
+
+  isLogin: boolean = false;
+
+  constructor() {
+
+  }
+
+  ngOnInit(){
+
+    if(window.location.pathname == '/login'){
+      this.isLogin = true
+    }else{
+      this.isLogin = false
+    }
+  }
+
 }

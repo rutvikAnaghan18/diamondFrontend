@@ -1,0 +1,184 @@
+
+
+/* Main Section */
+.main-section{
+    width: 95.50%;
+    margin: 30px;
+    border-radius: 20px;
+    background: white;
+}
+
+.main-section .main-section-header{
+    font-size: 20px;
+    font-weight: 700;
+    margin: 5px;
+    padding: 10px;
+}
+
+.main-section .main-body{
+    padding: 10px;
+}
+
+.main-body .stoneFields{
+    display: flex;
+    padding-left: 15px;
+}
+
+.flex-col{
+    display: flex;
+    flex-direction: column;
+}
+
+.mrg-25{
+    margin-right: 25px;
+}
+
+.stone-font{
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.stoneField{
+    margin-top: 6px;
+}
+
+.stoneField:focus{
+    box-shadow: none;
+    border-color: #dee2e6;
+}
+
+.width-300{
+    width: 300px;
+}
+
+.stoneTention{
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.stoneTention .btn{
+    background: #b5dee1;
+    color: black;
+    border-color: #b5dee1;
+    height: 40px;
+    width: 140px;
+}
+
+.stone-box{
+    display: flex;
+    margin-top: 25px;
+    padding-left: 15px;
+}
+
+.video-input{
+    width: 40%;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed;
+}
+
+.machine-table{
+    width: 60%;
+    padding-right: 10px;
+}
+
+.machine-table table{
+    border-radius: 10px !important;
+}
+
+.table thead tr{
+    border-radius: 10px !important;
+    background-color: #b5dee1;
+}
+
+.planTable{
+    padding: 10px;
+}
+
+.cursor-point{
+    cursor: pointer;
+}
+
+.row{
+    display: flex;
+}
+
+.row .btn{
+    width: 100px;
+    margin-right: 10px;
+}
+
+.save-btn{
+    background-color: #b5dee1;
+    color: black;
+}
+
+.cancel-btn{
+    background-color: #ff4c52;
+    color: white;
+}
+
+.modal-footer button{
+    outline: none;
+    border: 0;
+}
+
+.plan-details{
+    padding:10px;
+}
+
+.plan-input{
+    display: flex;
+}
+
+.plan-details .row{
+    margin-top: 20px;
+    margin-right: 3px;
+}
+
+.validation{
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.plan-details-header{
+    padding-left: 10px;
+}
+
+.plan-details-header .btn{
+    position: absolute;
+    right: 60px;
+    background-color: #ff4c52;
+    color: white;
+}
+
+.mrg-botm-15{
+    margin-bottom: 15px;
+}
+
+.table .stoneField::placeholder{
+    font-size: 12px;
+}
+
+.va-m{
+    vertical-align: middle !important;
+} 
+
+.txt-a-m{
+    text-align: center !important;
+}
+
+.mrg-10{
+    margin-right: 10px;
+}
+
+.add-plan-btn .btn{
+    color: black;
+    z-index: 1;
+    position: absolute;
+    right: 60px;
+    background-color: #b5dee1;
+}
