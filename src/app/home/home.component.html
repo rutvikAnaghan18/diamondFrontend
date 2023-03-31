@@ -46,136 +46,33 @@
 
         <div class="stone-box">
             <div class="video-input mrg-25">
-                <input type="file" [(ngModel)]="imageFile">
+                <input type="file" (change)="addfile($event)" [(ngModel)]="imageFile">
             </div>
             <div class="machine-table">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col" colspan="3" style="border-top-left-radius: 15px; border-top: none; border-top-right-radius: 15px;">Color Machine</th>
+                            <th scope="col" style="border-top-left-radius: 15px; border-top: none;">Result</th>
+                            <th scope="col">Color Measure</th>
+                            <th scope="col">Fluorescence Reading</th>
+                            <th scope="col">Comment</th>
+                            <th scope="col" style="border-top-right-radius: 15px; border-top: none;">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">Larry the Bird</td>
-                            <td>@twitter</td>
+                            <td class="text-center">A</td>
+                            <td>TLB</td>
+                            <td>002</td>
+                            <td>After Ghat</td>
+                            <td class="va-m txt-a-m cursor-point">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-
-        <!-- <div class="plan-details">
-                    <div>
-                        <div class="plan-details-header d-flex">
-                            <h4>Plan Details</h4>
-                        </div>
-                        <form action="" [formGroup]="planForm">
-                            <div class="plan-input">
-                                <div class="flex-col width-300 mrg-25">
-                                    <label for="" class="stone-font">Shape</label>
-                                    <input type="text" placeholder="Enter Shape" class="form-control stoneField"
-                                        formControlName="shape" required>
-                                    <div *ngIf="f['shape'].touched">
-                                        <div class="text-danger validation" *ngIf="f['shape'].errors">
-                                            Please Enter Shape Of Diamond..!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex-col width-300 mrg-25">
-                                    <label for="" class="stone-font">Weight</label>
-                                    <input type="text" placeholder="Enter Weight" class="form-control stoneField"
-                                        formControlName="weight" required>
-                                    <div *ngIf="f['weight'].touched">
-                                        <div class="text-danger validation" *ngIf="f['weight'].errors">
-                                            Please Enter Weight Of Diamond..!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex-col width-300 mrg-25">
-                                    <label for="" class="stone-font">Color</label>
-                                    <input type="text" placeholder="Enter Color" class="form-control stoneField"
-                                        formControlName="color" required>
-                                    <div *ngIf="f['color'].touched">
-                                        <div class="text-danger validation" *ngIf="f['color'].errors">
-                                            Please Enter Color Of Diamond..!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex-col width-300 mrg-25">
-                                    <label for="" class="stone-font">Purity</label>
-                                    <input type="text" placeholder="Enter Purity" class="form-control stoneField"
-                                        formControlName="purity" required>
-                                    <div *ngIf="f['purity'].touched">
-                                        <div class="text-danger validation" *ngIf="f['purity'].errors">
-                                            Please Enter Purity Of Diamond..!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex-col width-300 mrg-25">
-                                    <label for="" class="stone-font">C/P/S</label>
-                                    <input type="text" placeholder="Enter C/P/S" class="form-control stoneField"
-                                        formControlName="cps" required>
-                                    <div *ngIf="f['cps'].touched">
-                                        <div class="text-danger validation" *ngIf="f['cps'].errors">
-                                            Please Enter Valid C/P/S..!
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="plan-input">
-                                <div class="flex-col width-300 mrg-25">
-                                    <label for="" class="stone-font">RAP Price/CT</label>
-                                    <input type="text" placeholder="Enter RAP Price/CT" class="form-control stoneField"
-                                        formControlName="rapPrice" required>
-                                    <div *ngIf="f['rapPrice'].touched">
-                                        <div class="text-danger validation" *ngIf="f['rapPrice'].errors">
-                                            Please Enter Valid RAP Price/CT..!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex-col width-300 mrg-25">
-                                    <label for="" class="stone-font">Discount</label>
-                                    <input type="text" placeholder="Enter Discount" class="form-control stoneField"
-                                        formControlName="discount" required>
-                                    <div *ngIf="f['discount'].touched">
-                                        <div class="text-danger validation" *ngIf="f['discount'].errors">
-                                            Please Enter Valid Discount..!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex-col width-300 mrg-25">
-                                    <label for="" class="stone-font">Price/CT</label>
-                                    <input type="text" placeholder="Enter Price/CT" class="form-control stoneField"
-                                        formControlName="priceCT" required>
-                                    <div *ngIf="f['priceCT'].touched">
-                                        <div class="text-danger validation" *ngIf="f['priceCT'].errors">
-                                            Please Enter Valid Price/CT...!
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        <div class="row">
-                            <div class="button-right text-end">
-                                <button class="btn save-btn" (click)="SubmitPlanADetails()">Add</button>
-                                <button class="btn cancel-btn" (click)="canclePlan()">Cancle</button>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-
-        <!-- PLAN 1 -->
 
         <div class="plan-details">
             <div class="add-plan-btn">
@@ -284,160 +181,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- <div class="plan-details">
-                    <div *ngFor="let list of planFormTable; let k = index">
-                        <div class="plan-details-header d-flex">
-                            <h4>Plan {{k+1}}</h4>
-                            <button class="btn" (click)="addPlan()">Add Plan</button>
-                        </div>
-                        <div class="planTable">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">No.</th>
-                                        <th scope="col">Shape</th>
-                                        <th scope="col">Weight</th>
-                                        <th scope="col">Color</th>
-                                        <th scope="col">Purity</th>
-                                        <th scope="col">C/P/S</th>
-                                        <th scope="col">RAP Price/CT</th>
-                                        <th scope="col">Discount</th>
-                                        <th scope="col">Price/CT</th>
-                                        <th scope="col">Total</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="plan-tbody">
-                                    <tr>
-                                        <td></td>
-                                        <td class="va-m txt-a-m" colspan="9">
-                                            <form action="" [formGroup]="planForm">
-                                                <div class="plan-input">
-                                                    <div class="flex-col mrg-10">
-                                                        <input type="text" placeholder="Enter Shape"
-                                                            class="form-control stoneField" formControlName="shape"
-                                                            required>
-                                                        <div *ngIf="planForm.controls['shape'].touched">
-                                                            <div class="text-danger validation"
-                                                                *ngIf="f['shape'].errors">
-                                                                Please Enter Shape Of Diamond..!
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-col mrg-10">
-                                                        <input type="text" placeholder="Enter Weight"
-                                                            class="form-control stoneField" formControlName="weight"
-                                                            required>
-                                                        <div *ngIf="f['weight'].touched">
-                                                            <div class="text-danger validation"
-                                                                *ngIf="f['weight'].errors">
-                                                                Please Enter Weight Of Diamond..!
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-col mrg-10">
-                                                        <input type="text" placeholder="Enter Color"
-                                                            class="form-control stoneField" formControlName="color"
-                                                            required>
-                                                        <div *ngIf="f['color'].touched">
-                                                            <div class="text-danger validation"
-                                                                *ngIf="f['color'].errors">
-                                                                Please Enter Color Of Diamond..!
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-col mrg-10">
-                                                        <input type="text" placeholder="Enter Purity"
-                                                            class="form-control stoneField" formControlName="purity"
-                                                            required>
-                                                        <div *ngIf="f['purity'].touched">
-                                                            <div class="text-danger validation"
-                                                                *ngIf="f['purity'].errors">
-                                                                Please Enter Purity Of Diamond..!
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-col mrg-10">
-                                                        <input type="text" placeholder="Enter C/P/S"
-                                                            class="form-control stoneField" formControlName="cps"
-                                                            required>
-                                                        <div *ngIf="f['cps'].touched">
-                                                            <div class="text-danger validation" *ngIf="f['cps'].errors">
-                                                                Please Enter Valid C/P/S..!
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-col mrg-10">
-                                                        <input type="text" placeholder="Enter RAP Price/CT"
-                                                            class="form-control stoneField" formControlName="rapPrice"
-                                                            required>
-                                                        <div *ngIf="f['rapPrice'].touched">
-                                                            <div class="text-danger validation"
-                                                                *ngIf="f['rapPrice'].errors">
-                                                                Please Enter Valid RAP Price/CT..!
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-col mrg-10">
-                                                        <input type="text" placeholder="Enter Discount"
-                                                            class="form-control stoneField" formControlName="discount"
-                                                            required>
-                                                        <div *ngIf="f['discount'].touched">
-                                                            <div class="text-danger validation"
-                                                                *ngIf="f['discount'].errors">
-                                                                Please Enter Valid Discount..!
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-col mrg-10">
-                                                        <input type="text" placeholder="Enter Price/CT"
-                                                            class="form-control stoneField" formControlName="priceCT"
-                                                            required>
-                                                        <div *ngIf="f['priceCT'].touched">
-                                                            <div class="text-danger validation"
-                                                                *ngIf="f['priceCT'].errors">
-                                                                Please Enter Valid Price/CT...!
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-col">
-                                                        <input type="text" placeholder="Enter Total Price"
-                                                            class="form-control stoneField" formControlName="totalPrice"
-                                                            required>
-                                                        <div *ngIf="f['totalPrice'].touched">
-                                                            <div class="text-danger validation"
-                                                                *ngIf="f['totalPrice'].errors">
-                                                                Please Enter Valid totalPrice...!
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </td>
-                                        <td class="va-m txt-a-m cursor-point" (click)="SubmitPlanDetails(k)">
-                                            <i class="fa-solid fa-floppy-disk"></i>
-                                        </td>
-                                    </tr>
-                                    <tr *ngFor="let plan of planFormTable[k]; let i = index;">
-                                        <td class="va-m">{{i+1}}</td>
-                                        <td>{{plan.shape}}</td>
-                                        <td>{{plan.weight}}</td>
-                                        <td>{{plan.color}}</td>
-                                        <td>{{plan.purity}}</td>
-                                        <td>{{plan.cps}}</td>
-                                        <td>{{plan.rapPrice}}</td>
-                                        <td>{{plan.discount}}</td>
-                                        <td>{{plan.priceCT}}</td>
-                                        <td>{{plan.totalPrice}}</td>
-                                        <td class="va-m txt-a-m cursor-point"><i class="fa-solid fa-pen-to-square"></i>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div> -->
 
         <div class="row">
             <div class="button-right text-end">

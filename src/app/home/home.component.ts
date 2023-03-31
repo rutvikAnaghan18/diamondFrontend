@@ -1,8 +1,23 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ProductServiceService } from '../product-service.service';
+
+import * as XLSX from 'xlsx';
+
+export class details {
+  shape: String;
+  purity: String;
+  color: String;
+
+  constructor(shape: String, purity: String, color: String) {
+    this.shape = shape;
+    this.purity = purity;
+    this.color = color;
+  }
+}
 
 @Component({
   selector: 'app-home',
@@ -13,25 +28,27 @@ export class HomeComponent implements OnInit {
 
   time: FormControl;
   date: FormControl;
-
   isshowPlanB: boolean = false;
-  planForm: FormGroup;
   planTable: any[] = [];
   planFormTable: any[] = [];
-
   tenderName: String;
   stoneId: Number = NaN;
-  stoneWeight: Number;
+  stoneWeight: Number = NaN;
   stoneFL: String;
-  tention: Number;
+  tention: Number = NaN;
   imageFile: any;
-
   isUpdate: boolean = false;
-
   productId: Number;
+
+  public detailsArray: details[] = [];
+
+  file: File;
+  arrayBuffer: any;
+  filelist: any;
 
   constructor(private toastr: ToastrService,
     private diamondService: ProductServiceService,
+    private http: HttpClient,
     private route: ActivatedRoute) {
     this.date = new FormControl('', Validators.required)
     this.time = new FormControl('', Validators.required)
@@ -42,7 +59,7 @@ export class HomeComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.productId = params['id'];
 
-      if(this.productId){
+      if (this.productId) {
         this.isUpdate = true;
         this.getProductById(this.productId);
       }
@@ -65,6 +82,8 @@ export class HomeComponent implements OnInit {
     }])
 
     this.planTable.push([])
+
+    // this.getReadcsv();
   }
 
   SubmitPlan(index: any) {
@@ -121,10 +140,6 @@ export class HomeComponent implements OnInit {
     this.planTable[planindex].splice(index, 1);
   }
 
-  canclePlan() {
-    this.planForm.reset()
-  }
-
   cancelPlan(index: any) {
     this.planFormTable.splice(index, 1)
     this.planTable.splice(index, 1)
@@ -146,13 +161,6 @@ export class HomeComponent implements OnInit {
 
     this.planTable.push([])
   }
-
-  deleteProduct(id: any) {
-    this.diamondService.deleteProduct(id).subscribe((res: any) => {
-      console.log(res)
-    })
-  }
-
 
   submit() {
     var inValid = false;
@@ -183,12 +191,12 @@ export class HomeComponent implements OnInit {
         "plans": this.planTable
       })
 
-      this.diamondService.addNewProduct(obj[0]).subscribe((res : any) => {
-        if(res.Response){
-          if(res.Response.code == 0){
+      this.diamondService.addNewProduct(obj[0]).subscribe((res: any) => {
+        if (res.Response) {
+          if (res.Response.code == 0) {
             this.toastr.success(res.Response.Message)
             this.resetValues();
-          }else{
+          } else {
             this.toastr.error("Something Went Wrong!")
           }
         }
@@ -196,7 +204,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  update(){
+  update() {
     var inValid = false;
     for (let i = 0; i < this.planTable.length; i++) {
       if (this.planTable[i].length == 0) {
@@ -226,12 +234,12 @@ export class HomeComponent implements OnInit {
         "plans": this.planTable
       })
       console.log(obj)
-      this.diamondService.updateProduct(obj[0], this.productId).subscribe((res : any) => {
-        if(res.Response){
-          if(res.Response.code == 0){
+      this.diamondService.updateProduct(obj[0], this.productId).subscribe((res: any) => {
+        if (res.Response) {
+          if (res.Response.code == 0) {
             this.toastr.success(res.Response.Message)
             this.resetValues();
-          }else{
+          } else {
             this.toastr.error("Something Went Wrong!")
           }
         }
@@ -271,7 +279,7 @@ export class HomeComponent implements OnInit {
     this.diamondService.getProductById(id).subscribe((res: any) => {
 
       console.log(res)
-      this.date.setValue(res.Date.slice(0,10))
+      this.date.setValue(res.Date.slice(0, 10))
       this.tenderName = res.TenderName
       this.stoneId = res.stoneId
       // this.imageFile = res[0].image_url
@@ -280,7 +288,7 @@ export class HomeComponent implements OnInit {
       this.tention = res.tention
       this.time.setValue(res.time)
 
-      for (let i = 0; i < res.plans.length-1; i++) {
+      for (let i = 0; i < res.plans.length - 1; i++) {
         this.planFormTable.push([{
           shape: '',
           weight: '',
@@ -297,17 +305,35 @@ export class HomeComponent implements OnInit {
     })
   }
 
+  // getReadcsv() {
+  //   this.http.get('../../assets/TENDER.csv', { responseType: 'text' }).subscribe(
+  //     data => {
+  //       let csvToRowArray = data.split("\n");
+  //       for (let index = 1; index < csvToRowArray.length - 1; index++) {
+  //         let row = csvToRowArray[index].split(",");
+  //         this.detailsArray.push(new details(row[0], row[1], row[2].trim()));
+  //       }
+  //       console.log(this.detailsArray);
+  //     }
+  //   )
+  // }
 
-  deletedPlanList() {
-    this.diamondService.deletedListPlans().subscribe((res: any) => {
-      console.log(res)
-    })
-  }
-
-  deletePlanById(id: any) {
-    this.diamondService.deletePlan(id).subscribe((res: any) => {
-      console.log(res)
-    })
+  addfile(event: any) {
+    this.file = event.target.files[0];
+    let fileReader = new FileReader();
+    fileReader.readAsArrayBuffer(this.file);
+    fileReader.onload = (e) => {
+      this.arrayBuffer = fileReader.result;
+      var data = new Uint8Array(this.arrayBuffer);
+      var arr = new Array();
+      for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+      var bstr = arr.join("");
+      var workbook = XLSX.read(bstr, { type: "binary" });
+      var first_sheet_name = workbook.SheetNames[0];
+      var worksheet = workbook.Sheets[first_sheet_name];
+      var arraylist = XLSX.utils.sheet_to_json(worksheet, { raw: true });
+      console.log(arraylist)
+    }
   }
 
 }
