@@ -26,7 +26,6 @@ export class BidMasterComponent implements OnInit {
   getListOfBids(){
     this.diamondService.ListBids().subscribe((res: any) => {
       this.bidList = res
-      console.log(this.bidList)
     })
   }
 

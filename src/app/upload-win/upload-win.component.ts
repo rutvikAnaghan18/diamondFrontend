@@ -41,6 +41,7 @@ export class UploadWinComponent implements OnInit {
   }
 
   submit(){
+    console.log(this.arrayList);
     if (this.arrayList) {
       this.diamondService.uploadWinFile(this.arrayList).subscribe((res) => {
         if (res.Response.code == 0) {

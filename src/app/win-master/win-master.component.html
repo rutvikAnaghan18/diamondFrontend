@@ -25,96 +25,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr *ngFor="let win of winList; let i = index">
                             <!-- <td scope="col" style="border-top-left-radius: 15px; border-top: none;">Aphelios Solutions</td> -->
-                            <td scope="col" style="border-top-left-radius: 15px; border-top: none;">18</td>
-                            <td scope="col">4</td>
-                            <td scope="col">718</td>
-                            <td scope="col">71803</td>
-                            <td scope="col">17,950.75</td>
-                            <td scope="col">72000</td>
-                            <td scope="col">254738.9395</td>
-                            <td scope="col">7542820</td>
-                            <td scope="col">SOLD</td>
-                            <td scope="col">7089333</td>
-                        </tr>
-                        <tr>
-                            <!-- <td scope="col" style="border-top-left-radius: 15px; border-top: none;">Aphelios Solutions</td> -->
-                            <td scope="col" style="border-top-left-radius: 15px; border-top: none;">18</td>
-                            <td scope="col">4</td>
-                            <td scope="col">718</td>
-                            <td scope="col">71803</td>
-                            <td scope="col">17,950.75</td>
-                            <td scope="col">72000</td>
-                            <td scope="col">254738.9395</td>
-                            <td scope="col">7542820</td>
-                            <td scope="col">SOLD</td>
-                            <td scope="col">7089333</td>
-                        </tr>
-                        <tr>
-                            <!-- <td scope="col" style="border-top-left-radius: 15px; border-top: none;">Aphelios Solutions</td> -->
-                            <td scope="col" style="border-top-left-radius: 15px; border-top: none;">18</td>
-                            <td scope="col">4</td>
-                            <td scope="col">718</td>
-                            <td scope="col">71803</td>
-                            <td scope="col">17,950.75</td>
-                            <td scope="col">72000</td>
-                            <td scope="col">254738.9395</td>
-                            <td scope="col">7542820</td>
-                            <td scope="col">SOLD</td>
-                            <td scope="col">7089333</td>
-                        </tr>
-                        <tr>
-                            <!-- <td scope="col" style="border-top-left-radius: 15px; border-top: none;">Aphelios Solutions</td> -->
-                            <td scope="col" style="border-top-left-radius: 15px; border-top: none;">18</td>
-                            <td scope="col">4</td>
-                            <td scope="col">718</td>
-                            <td scope="col">71803</td>
-                            <td scope="col">17,950.75</td>
-                            <td scope="col">72000</td>
-                            <td scope="col">254738.9395</td>
-                            <td scope="col">7542820</td>
-                            <td scope="col">SOLD</td>
-                            <td scope="col">7089333</td>
-                        </tr>
-                        <tr>
-                            <!-- <td scope="col" style="border-top-left-radius: 15px; border-top: none;">Aphelios Solutions</td> -->
-                            <td scope="col" style="border-top-left-radius: 15px; border-top: none;">18</td>
-                            <td scope="col">4</td>
-                            <td scope="col">718</td>
-                            <td scope="col">71803</td>
-                            <td scope="col">17,950.75</td>
-                            <td scope="col">72000</td>
-                            <td scope="col">254738.9395</td>
-                            <td scope="col">7542820</td>
-                            <td scope="col">SOLD</td>
-                            <td scope="col">7089333</td>
-                        </tr>
-                        <tr>
-                            <!-- <td scope="col" style="border-top-left-radius: 15px; border-top: none;">Aphelios Solutions</td> -->
-                            <td scope="col" style="border-top-left-radius: 15px; border-top: none;">18</td>
-                            <td scope="col">4</td>
-                            <td scope="col">718</td>
-                            <td scope="col">71803</td>
-                            <td scope="col">17,950.75</td>
-                            <td scope="col">72000</td>
-                            <td scope="col">254738.9395</td>
-                            <td scope="col">7542820</td>
-                            <td scope="col">WON</td>
-                            <td scope="col">7089333</td>
-                        </tr>
-                        <tr>
-                            <!-- <td scope="col" style="border-top-left-radius: 15px; border-top: none;">Aphelios Solutions</td> -->
-                            <td scope="col" style="border-top-left-radius: 15px; border-top: none;">18</td>
-                            <td scope="col">4</td>
-                            <td scope="col">718</td>
-                            <td scope="col">71803</td>
-                            <td scope="col">17,950.75</td>
-                            <td scope="col">72000</td>
-                            <td scope="col">254738.9395</td>
-                            <td scope="col">7542820</td>
-                            <td scope="col">SOLD</td>
-                            <td scope="col">7089333</td>
+                            <td scope="col">{{win.stoneId}}</td>
+                            <td scope="col">{{win.stoneWeight}}</td>
+                            <td scope="col">{{win.basePricePerCT}}</td>
+                            <td scope="col">{{win.totalBasePrice}}</td>
+                            <td scope="col">{{win.bidPricePerCT}}</td>
+                            <td scope="col">{{win.bidPrice}}</td>
+                            <td scope="col">{{win.wonPricePerCT}}</td>
+                            <td scope="col">{{win.wonPrice}}</td>
+                            <td scope="col">{{win.wonSold}}</td>
+                            <td scope="col">{{win.difference}}</td>
                         </tr>
                     </tbody>
                 </table>

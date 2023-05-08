@@ -10,37 +10,23 @@ import { ProductServiceService } from '../product-service.service';
 })
 export class WinMasterComponent implements OnInit {
 
-  productList: any[] = [];
+  winList: any[] = [];
 
   constructor(private route: Router, private diamondService: ProductServiceService, private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
-    this.getListOfProduct();
+    this.getListOfWins();
   }
 
   viewProduct(product: any){
     this.route.navigate(['home', product.id])
   }
 
-  getListOfProduct(){
-    this.diamondService.getListProduct().subscribe((res: any) => {
-      this.productList = res
+  getListOfWins(){
+    this.diamondService.ListWins().subscribe((res: any) => {
+      this.winList = res
     })
-  }
-
-  deleteProduct(prod: any){
-    var id = prod.id
-    if(id){
-      this.diamondService.deleteProduct(id).subscribe((res: any) => {
-        if(res.Response){
-          if(res.Response.code == 0){
-            this.toastr.success(res.Response.Message)
-          }
-        }
-        this.getListOfProduct();
-      })
-    }
   }
 
 }

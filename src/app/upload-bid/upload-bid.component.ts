@@ -36,7 +36,6 @@ export class UploadBidComponent implements OnInit {
       var first_sheet_name = workbook.SheetNames[0];
       var worksheet = workbook.Sheets[first_sheet_name];
       this.arrayList = XLSX.utils.sheet_to_json(worksheet, { raw: true });
-
     }
   }
 
