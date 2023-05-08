@@ -4,20 +4,15 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Params } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ProductServiceService } from '../product-service.service';
+import { ThemePalette } from '@angular/material/core';
 
 import * as XLSX from 'xlsx';
 
-export class details {
-  shape: String;
-  purity: String;
-  color: String;
-
-  constructor(shape: String, purity: String, color: String) {
-    this.shape = shape;
-    this.purity = purity;
-    this.color = color;
-  }
+interface Shape {
+  id: string;
+  value: string;
 }
+
 
 @Component({
   selector: 'app-home',
@@ -40,11 +35,122 @@ export class HomeComponent implements OnInit {
   isUpdate: boolean = false;
   productId: Number;
 
-  public detailsArray: details[] = [];
-
   file: File;
   arrayBuffer: any;
   filelist: any;
+  url : String = "";
+  image_uploaded : Boolean = false;
+  isSearchHide: Boolean = false;
+
+  planDetailArray: any[] = [];
+
+  planShow : Boolean = false;
+
+  shapes: Shape[] = [
+    {
+      id: '1',
+      value: 'RD'
+    },   
+    {
+      id: '2',
+      value: 'MQ'
+    },   
+    {
+      id: '3',
+      value: 'OV'
+    },   
+    {
+      id: '4',
+      value: 'PE'
+    },   
+    {
+      id: '5',
+      value: 'PR'
+    },   
+    {
+      id: '6',
+      value: 'HT'
+    },   
+    {
+      id: '7',
+      value: 'CUS'
+    },
+    {
+      id: '8',
+      value: 'RAD'
+    },
+    {
+      id: '9',
+      value: 'EM'
+    },
+    {
+      id: '9',
+      value: 'BR'
+    }
+  ]
+
+  colors: Shape[] = [
+    {
+      id: '1',
+      value:'D'
+    },
+    {
+      id: '2',
+      value:'E'
+    },
+    {
+      id: '3',
+      value:'F'
+    },
+    {
+      id: '4',
+      value:'G'
+    },
+    {
+      id: '5',
+      value:'H'
+    },
+    {
+      id: '5',
+      value:'I'
+    },
+    {
+      id: '6',
+      value:'J'
+    },
+    {
+      id: '7',
+      value:'K'
+    },
+    {
+      id: '8',
+      value:'L'
+    },
+    {
+      id: '9',
+      value:'M'
+    },
+    {
+      id: '10',
+      value:'N'
+    },
+    {
+      id: '11',
+      value:'O'
+    },
+    {
+      id: '12',
+      value:'1'
+    },
+    {
+      id: '13',
+      value:'LB'
+    },
+    {
+      id: '14',
+      value:'FN'
+    },
+  ]
 
   constructor(private toastr: ToastrService,
     private diamondService: ProductServiceService,
@@ -75,6 +181,8 @@ export class HomeComponent implements OnInit {
       color: '',
       purity: '',
       cps: '',
+      search: false,
+      isColorMannual: false,
       rapPrice: '',
       discount: '',
       priceCT: '',
@@ -82,12 +190,36 @@ export class HomeComponent implements OnInit {
     }])
 
     this.planTable.push([])
+    this.planDetailArray.push({
+      totalPlanPrice: '',
+      lessOfPlan: '',
+      finalTotal: ''
+    })
 
-    // this.getReadcsv();
+  }
+
+  lessPlan(plan: any){
+    var totalPlanPrice = plan.totalPlanPrice
+    var lessAmount = totalPlanPrice * plan.lessOfPlan/100;
+    plan.finalTotal = totalPlanPrice - lessAmount
+  }
+
+  changeColor(plan : any){
+    var color = plan.color;
+    if (color == "FN") {
+      plan.isColorMannual = true;
+      plan.search = true;
+      this.isSearchHide = true;
+    }else{
+      plan.isColorMannual = false;
+      plan.search = false;
+    }
   }
 
   SubmitPlan(index: any) {
     var len = this.planFormTable[index].length
+
+    var totalPricePlan = 0
 
     if (this.planFormTable[index][length - 1].shape == "" || this.planFormTable[index][length - 1].weight == "" ||
       this.planFormTable[index][length - 1].color == "" || this.planFormTable[index][length - 1].purity == "" ||
@@ -112,11 +244,31 @@ export class HomeComponent implements OnInit {
         })
       }
 
+      for (let j = 0; j < this.planTable[index].length; j++) {
+        totalPricePlan = totalPricePlan + this.planTable[index][j].totalPrice
+      }
+
+      if (this.planDetailArray[index]) {
+        this.planShow = true;
+        this.planDetailArray[index].totalPlanPrice = totalPricePlan
+      } else {
+        this.planDetailArray.push({
+          totalPlanPrice: totalPricePlan,
+          lessOfPlan: '',
+          finalTotal: ''
+        })
+      }
+
+
+      console.log(this.planDetailArray)
+
       this.planFormTable[index][length - 1].shape = ""
       this.planFormTable[index][length - 1].weight = ""
       this.planFormTable[index][length - 1].color = ""
       this.planFormTable[index][length - 1].purity = ""
       this.planFormTable[index][length - 1].cps = ""
+      this.planFormTable[index][length - 1].search = false
+      this.planFormTable[index][length - 1].isColorMannual = false
       this.planFormTable[index][length - 1].rapPrice = ""
       this.planFormTable[index][length - 1].discount = ""
       this.planFormTable[index][length - 1].priceCT = ""
@@ -147,19 +299,86 @@ export class HomeComponent implements OnInit {
 
 
   addPlan() {
-    this.planFormTable.push([{
-      shape: '',
-      weight: '',
-      color: '',
-      purity: '',
-      cps: '',
-      rapPrice: '',
-      discount: '',
-      priceCT: '',
-      totalPrice: ''
-    }])
 
-    this.planTable.push([])
+    if (this.planTable[this.planTable.length - 1] == '') {
+      this.toastr.warning("Please Add Atleast 1 Plan To Add Another!")
+    } else {
+      this.planFormTable.push([{
+        shape: '',
+        weight: '',
+        color: '',
+        purity: '',
+        cps: '',
+        search: false,
+        isColorMannual: false,
+        rapPrice: '',
+        discount: '',
+        priceCT: '',
+        totalPrice: ''
+      }])
+
+      this.planTable.push([])
+    }
+
+    // if(this.planFormTable[this.planFormTable.length - 1].shape == undefined || 
+    // this.planFormTable[this.planFormTable.length - 1].color == undefined || 
+    // this.planFormTable[this.planFormTable.length - 1].weight == undefined || 
+    // this.planFormTable[this.planFormTable.length - 1].purity == undefined ||
+    // this.planFormTable[this.planFormTable.length - 1].cps == undefined ||
+    // this.planFormTable[this.planFormTable.length - 1].rapPrice == undefined ||
+    // this.planFormTable[this.planFormTable.length - 1].discount == undefined ||
+    // this.planFormTable[this.planFormTable.length - 1].priceCT == undefined ||
+    // this.planFormTable[this.planFormTable.length - 1].totalPrice == undefined){
+    //   this.toastr.warning("Please Add Atleast 1 Plan To Add Another!")
+    // }else{
+    //   this.planFormTable.push([{
+    //     shape: '',
+    //     weight: '',
+    //     color: '',
+    //     purity: '',
+    //     cps: '',
+    //     rapPrice: '',
+    //     discount: '',
+    //     priceCT: '',
+    //     totalPrice: ''
+    //   }])
+
+    //   this.planTable.push([])
+    // }
+  }
+
+  searchPlan(plan: any) {
+
+    console.log(plan)
+
+    var searchObj = {
+      shape: plan[plan.length - 1][plan[plan.length - 1].length - 1].shape,
+      color: plan[plan.length - 1][plan[plan.length - 1].length - 1].color,
+      weight: plan[plan.length - 1][plan[plan.length - 1].length - 1].weight,
+      purity: plan[plan.length - 1][plan[plan.length - 1].length - 1].purity
+    }
+
+    if (searchObj.shape == '' || searchObj.color == '' || searchObj.weight == '' || searchObj.purity == '') {
+      this.toastr.warning("Please Filled All Plan Details!")
+    } else {
+      this.diamondService.searchPlan(searchObj).subscribe((res: any) => {
+        if (res && res.length) {
+          plan[plan.length - 1][plan[plan.length - 1].length - 1].rapPrice = res[0].price
+          this.planFormTable = plan
+          this.isSearchHide = true
+          plan[plan.length - 1][plan[plan.length - 1].length - 1].search = true;
+
+        } else {
+          this.toastr.error("Record Not Found")
+        }
+      })
+    }
+
+  }
+
+  addDiscount(plan: any) {
+    plan.priceCT = (plan.rapPrice - ((plan.rapPrice * plan.discount) / 100))
+    plan.totalPrice = plan.priceCT * plan.weight
   }
 
   submit() {
@@ -267,6 +486,8 @@ export class HomeComponent implements OnInit {
       color: '',
       purity: '',
       cps: '',
+      search: false,
+      isColorMannual: false,
       rapPrice: '',
       discount: '',
       priceCT: '',
@@ -295,6 +516,8 @@ export class HomeComponent implements OnInit {
           color: '',
           purity: '',
           cps: '',
+          search: false,
+          isColorMannual: false,
           rapPrice: '',
           discount: '',
           priceCT: '',
@@ -305,34 +528,24 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  // getReadcsv() {
-  //   this.http.get('../../assets/TENDER.csv', { responseType: 'text' }).subscribe(
-  //     data => {
-  //       let csvToRowArray = data.split("\n");
-  //       for (let index = 1; index < csvToRowArray.length - 1; index++) {
-  //         let row = csvToRowArray[index].split(",");
-  //         this.detailsArray.push(new details(row[0], row[1], row[2].trim()));
-  //       }
-  //       console.log(this.detailsArray);
-  //     }
-  //   )
-  // }
-
   addfile(event: any) {
     this.file = event.target.files[0];
     let fileReader = new FileReader();
-    fileReader.readAsArrayBuffer(this.file);
+    // fileReader.readAsArrayBuffer(this.file);
+    fileReader.readAsDataURL(this.file)
     fileReader.onload = (e) => {
-      this.arrayBuffer = fileReader.result;
-      var data = new Uint8Array(this.arrayBuffer);
-      var arr = new Array();
-      for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
-      var bstr = arr.join("");
-      var workbook = XLSX.read(bstr, { type: "binary" });
-      var first_sheet_name = workbook.SheetNames[0];
-      var worksheet = workbook.Sheets[first_sheet_name];
-      var arraylist = XLSX.utils.sheet_to_json(worksheet, { raw: true });
-      console.log(arraylist)
+      this.image_uploaded = true;
+      // this.arrayBuffer = fileReader.result;
+      this.url = e.target?.result as String;
+      // var data = new Uint8Array(this.arrayBuffer);
+      // var arr = new Array();
+      // for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+      // var bstr = arr.join("");
+      // var workbook = XLSX.read(bstr, { type: "binary" });
+      // var first_sheet_name = workbook.SheetNames[0];
+      // var worksheet = workbook.Sheets[first_sheet_name];
+      // var arraylist = XLSX.utils.sheet_to_json(worksheet, { raw: true });
+      // console.log(arraylist)
     }
   }
 

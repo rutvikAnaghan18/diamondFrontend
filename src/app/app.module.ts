@@ -16,6 +16,12 @@ import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
 import { MasterComponent } from './master/master.component';
 import { HttpClientModule } from '@angular/common/http';
+import { UploadDocComponent } from './upload-doc/upload-doc.component';
+import { MatInputModule } from '@angular/material/input';
+import { UploadBidComponent } from './upload-bid/upload-bid.component';
+import { UploadWinComponent } from './upload-win/upload-win.component';
+import { BidMasterComponent } from './bid-master/bid-master.component';
+import { WinMasterComponent } from './win-master/win-master.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +29,12 @@ import { HttpClientModule } from '@angular/common/http';
     HomeComponent,
     LoginComponent,
     PagenotfoundComponent,
-    MasterComponent
+    MasterComponent,
+    UploadDocComponent,
+    UploadBidComponent,
+    UploadWinComponent,
+    BidMasterComponent,
+    WinMasterComponent
   ],
   imports: [
     BrowserModule,
@@ -40,6 +51,7 @@ import { HttpClientModule } from '@angular/common/http';
       timeOut: 1500,
       positionClass: 'toast-top-right'
     }),
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]

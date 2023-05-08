@@ -63,8 +63,45 @@ export class ProductServiceService {
     return this.http.get<any>(this.BASE_URL + `/api/goods/SearchPlansById/${id}`)
   }
 
-  updatePlanbyId(data: any, id: any){
+  updatePlanbyId(data: any, id: any):Observable<any>{
     return this.http.post<any>(this.BASE_URL + `/api/goods/updatePlansById/${id}`, data)
   }
 
+  // Upload File
+
+  uploadFile(data: any):Observable<any>{
+    return this.http.post<any>(this.BASE_URL + '/api/goods/AddRAP', data);
+  }
+
+  uploadBidFile(data: any):Observable<any>{
+    return this.http.post<any>(this.BASE_URL + `/api/goods/AddBids`, data);
+  }
+
+  uploadWinFile(data : any):Observable<any>{
+    return this.http.post<any>(this.BASE_URL + `/api/goods/AddWonLoss`, data);
+  }
+
+
+  // Search
+  searchPlan(data: any):Observable<any>{
+    return this.http.post<any>(this.BASE_URL+ '/api/goods/SearchRAP', data);
+  }
+
+  searchBid(id: any):Observable<any>{
+    return this.http.get<any>(this.BASE_URL + `/api/goods/SearchBids/${id}`)
+  }
+  
+  searchWin(id: any):Observable<any>{
+    return this.http.get<any>(this.BASE_URL + `/api/goods/SearchWin/${id}`)
+  }
+
+
+  // List
+  ListBids():Observable<any>{
+    return this.http.get(this.BASE_URL + `/api/goods/ListBids`);
+  }
+  
+  ListWins():Observable<any>{
+    return this.http.get(this.BASE_URL + `/api/goods/ListWins`);
+  }
 }

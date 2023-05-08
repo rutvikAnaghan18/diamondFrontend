@@ -1,0 +1,47 @@
+
+
+/* Main Section */
+.main-section{
+    width: 95.50%;
+    margin: 30px;
+    border-radius: 20px;
+    background: white;
+    overflow: auto;
+}
+
+.main-section .main-section-header{
+    font-size: 20px;
+    font-weight: 700;
+    margin: 9px;
+    padding: 10px;
+}
+
+.main-section .main-body{
+    padding: 10px;
+    padding-top: 0px ;
+}
+
+.stone-box{
+    display: flex;
+    margin-top: 25px;
+    padding-left: 15px;
+}
+
+
+.machine-table{
+    width: 100% !important;
+    padding-right: 10px;
+}
+
+.machine-table table{
+    border-radius: 10px !important;
+}
+
+.table thead tr{
+    border-radius: 10px !important;
+    background-color: #b5dee1;
+}
+
+.cursor-pointer{
+    cursor: pointer;
+}

@@ -7,7 +7,8 @@
         <div class="stoneFields">
             <div class="stoneId flex-col width-300 mrg-25 mrg-botm-15">
                 <label for="" class="stone-font">Tender Name</label>
-                <input type="text" placeholder="Enter Tender Name" [(ngModel)]="tenderName" class="form-control stoneField" name="" id="">
+                <input type="text" placeholder="Enter Tender Name" [(ngModel)]="tenderName"
+                    class="form-control stoneField" name="" id="">
             </div>
             <div class="stoneWeights flex-col width-300 mrg-25">
                 <label for="" class="stone-font">Date</label>
@@ -28,24 +29,29 @@
         <div class="stoneFields">
             <div class="stoneId flex-col width-300 mrg-25">
                 <label for="" class="stone-font">Stone Id</label>
-                <input type="number" placeholder="Enter Stone Id" [(ngModel)]="stoneId" class="form-control stoneField" name="" id="">
+                <input type="number" placeholder="Enter Stone Id" [(ngModel)]="stoneId" class="form-control stoneField"
+                    name="" id="">
             </div>
             <div class="stoneWeights flex-col width-300 mrg-25">
                 <label for="" class="stone-font">Stone Weight</label>
-                <input type="number" placeholder="Enter Stone Weight" [(ngModel)]="stoneWeight" class="form-control stoneField" name="" id="">
+                <input type="number" placeholder="Enter Stone Weight" [(ngModel)]="stoneWeight"
+                    class="form-control stoneField" name="" id="">
             </div>
             <div class="stoneFL flex-col width-300 mrg-25">
                 <label for="" class="stone-font">Stone FL</label>
-                <input type="text" placeholder="Enter Stone FL" [(ngModel)]="stoneFL" class="form-control stoneField" name="" id="">
+                <input type="text" placeholder="Enter Stone FL" [(ngModel)]="stoneFL" class="form-control stoneField"
+                    name="" id="">
             </div>
             <div class="stoneFL flex-col width-300 mrg-25">
                 <label for="" class="stone-font">Tention</label>
-                <input type="number" placeholder="Enter Tention" [(ngModel)]="tention" class="form-control stoneField" name="" id="">
+                <input type="number" placeholder="Enter Tention" [(ngModel)]="tention" class="form-control stoneField"
+                    name="" id="">
             </div>
         </div>
 
         <div class="stone-box">
             <div class="video-input mrg-25">
+                <img [src]="url" height="200" alt="" *ngIf="image_uploaded"> <br>
                 <input type="file" (change)="addfile($event)" [(ngModel)]="imageFile">
             </div>
             <div class="machine-table">
@@ -54,7 +60,7 @@
                         <tr>
                             <th scope="col" style="border-top-left-radius: 15px; border-top: none;">Result</th>
                             <th scope="col">Color Measure</th>
-                            <th scope="col">Fluorescence Reading</th>
+                            <th scope="col">Reading</th>
                             <th scope="col">Comment</th>
                             <th scope="col" style="border-top-right-radius: 15px; border-top: none;">Action</th>
                         </tr>
@@ -87,77 +93,111 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col" style="border-top-left-radius: 15px; border-top: none;">No.</th>
-                                <th scope="col">Shape</th>
-                                <th scope="col">Weight</th>
-                                <th scope="col">Color</th>
-                                <th scope="col">Purity</th>
-                                <th scope="col">C/P/S</th>
-                                <th scope="col">RAP Price/CT</th>
-                                <th scope="col">Discount</th>
-                                <th scope="col">Price/CT</th>
-                                <th scope="col">Total</th>
-                                <th scope="col" style="border-top-right-radius: 15px; border-top: none;">Action</th>
+                                <th scope="col" style="border-top-left-radius: 15px; border-top: none; width:20px;">No.</th>
+                                <th scope="col" style="width:110px;">Shape</th>
+                                <th scope="col" style="width:112px;">Weight</th>
+                                <th scope="col" style="width:110px;">Color</th>
+                                <th scope="col" style="width:110px;">Purity</th>
+                                <th scope="col" style="width:110px;" *ngIf="isSearchHide == true">C/P/S</th>
+                                <th scope="col" style="width: 110px; padding-right: 0px;" *ngIf="isSearchHide == true">RAP Price/CT</th>
+                                <th scope="col" style="width:110px;" *ngIf="isSearchHide == true">Discount(%)</th>
+                                <th scope="col" style="width:110px;" *ngIf="isSearchHide == true">Price/CT</th>
+                                <th scope="col" style="width:100px;" *ngIf="isSearchHide == true">Total</th>
+                                <th scope="col" *ngIf="isSearchHide == true"
+                                    style="border-top-right-radius: 15px; border-top: none;">Action</th>
                             </tr>
                         </thead>
                         <tbody class="plan-tbody">
                             <tr>
                                 <td></td>
-                                <td class="va-m txt-a-m" colspan="9">
+                                <td class="va-m txt-a-m" colspan="10">
                                     <div *ngFor="let plan of planFormTable[k]">
                                         <div class="plan-input">
                                             <div class="flex-col mrg-10">
-                                                <input type="text" placeholder="Enter Shape"
-                                                    class="form-control stoneField" [(ngModel)]="plan.shape" required>
+                                                <mat-form-field appearance="fill">
+                                                    <mat-label>Shape</mat-label>
+                                                    <mat-select [(ngModel)]="plan.shape">
+                                                        <mat-option *ngFor="let shape of shapes" [value]="shape.value">
+                                                            {{shape.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
                                             </div>
                                             <div class="flex-col mrg-10">
-                                                <input type="text" placeholder="Enter Weight"
-                                                    class="form-control stoneField" [(ngModel)]="plan.weight" required>
-
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>Weight</mat-label>
+                                                    <input matInput placeholder="" [(ngModel)]="plan.weight"
+                                                        value="{{plan.weight}}">
+                                                </mat-form-field>
                                             </div>
                                             <div class="flex-col mrg-10">
-                                                <input type="text" placeholder="Enter Color"
-                                                    class="form-control stoneField" [(ngModel)]="plan.color" required>
-
+                                                <mat-form-field appearance="fill" *ngIf="plan.isColorMannual == false">
+                                                    <mat-label>Color</mat-label>
+                                                    <mat-select [(ngModel)]="plan.color" (selectionChange)="changeColor(plan)">
+                                                        <mat-option *ngFor="let color of colors" [value]="color.value">
+                                                            {{color.value}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                                <mat-form-field class="example-full-width" *ngIf="plan.isColorMannual == true" appearance="fill">
+                                                    <mat-label>Color</mat-label>
+                                                    <input matInput placeholder="" [(ngModel)]="plan.color"
+                                                        value="{{plan.color}}">
+                                                </mat-form-field>
                                             </div>
                                             <div class="flex-col mrg-10">
-                                                <input type="text" placeholder="Enter Purity"
-                                                    class="form-control stoneField" [(ngModel)]="plan.purity" required>
-
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>Purity</mat-label>
+                                                    <input matInput placeholder="" [(ngModel)]="plan.purity"
+                                                        value="{{plan.purity}}">
+                                                </mat-form-field>
                                             </div>
-                                            <div class="flex-col mrg-10">
-                                                <input type="text" placeholder="Enter C/P/S"
-                                                    class="form-control stoneField" [(ngModel)]="plan.cps" required>
-
+                                            <div *ngIf="plan.search == false" class="search-div">
+                                                <button class="btn btn-primary search-btn"
+                                                    (click)="searchPlan(planFormTable)">Search</button>
                                             </div>
-                                            <div class="flex-col mrg-10">
-                                                <input type="text" placeholder="Enter RAP Price/CT"
-                                                    class="form-control stoneField" [(ngModel)]="plan.rapPrice"
-                                                    required>
 
+                                            <div class="flex-col mrg-10" *ngIf="plan.search == true">
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>C/P/S</mat-label>
+                                                    <input matInput placeholder="" [(ngModel)]="plan.cps"
+                                                        value="{{plan.cps}}">
+                                                </mat-form-field>
                                             </div>
-                                            <div class="flex-col mrg-10">
-                                                <input type="text" placeholder="Enter Discount"
-                                                    class="form-control stoneField" [(ngModel)]="plan.discount"
-                                                    required>
-
+                                            <div class="flex-col mrg-10" *ngIf="plan.search == true">
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>RAP Price/CT</mat-label>
+                                                    <input matInput placeholder="" [(ngModel)]="plan.rapPrice"
+                                                        value="{{plan.rapPrice}}">
+                                                </mat-form-field>
                                             </div>
-                                            <div class="flex-col mrg-10">
-                                                <input type="text" placeholder="Enter Price/CT"
-                                                    class="form-control stoneField" [(ngModel)]="plan.priceCT" required>
-
+                                            <div class="flex-col mrg-10" *ngIf="plan.search == true">
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>Discount</mat-label>
+                                                    <input matInput placeholder="" (change)="addDiscount(plan)" [(ngModel)]="plan.discount"
+                                                        value="{{plan.discount}}">
+                                                </mat-form-field>
                                             </div>
-                                            <div class="flex-col">
-                                                <input type="text" placeholder="Enter Total Price"
-                                                    class="form-control stoneField" [(ngModel)]="plan.totalPrice"
-                                                    required>
-
+                                            <div class="flex-col mrg-10" *ngIf="plan.search == true">
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>Price/CT</mat-label>
+                                                    <input matInput placeholder="" [(ngModel)]="plan.priceCT"
+                                                        value="{{plan.priceCT}}">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="flex-col" *ngIf="plan.search == true">
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>Total Price</mat-label>
+                                                    <input matInput placeholder="" [(ngModel)]="plan.totalPrice"
+                                                        value="{{plan.totalPrice}}">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="va-m txt-a-m cursor-point" style="width: 100%; margin-top: 7px;" (click)="SubmitPlan(k)"
+                                                *ngIf="plan.search == true">
+                                                <i class="fa-solid fa-floppy-disk"></i>
                                             </div>
                                         </div>
                                     </div>
-                                </td>
-                                <td class="va-m txt-a-m cursor-point" (click)="SubmitPlan(k)">
-                                    <i class="fa-solid fa-floppy-disk"></i>
                                 </td>
                             </tr>
                             <tr *ngFor="let plan of planTable[k]; let i = index;">
@@ -182,7 +222,37 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row plan-row">
+            <div class="select-plan" *ngIf="planDetailArray && planShow">
+                <section class="select-section" *ngFor="let plan of planDetailArray, let i = index;">
+                    <mat-checkbox class="select-margin"></mat-checkbox>
+                    <div class="plan-detail">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Plan {{i+1}}</mat-label>
+                            <input matInput placeholder="" value="Plan {{i+1}}">
+                        </mat-form-field>
+                    </div>
+                    <div class="plan-detail">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Total Of Plan {{i+1}}</mat-label>
+                            <input matInput placeholder="" [(ngModel)]="plan.totalPlanPrice"
+                                value="{{plan.totalPlanPrice}}">
+                        </mat-form-field>
+                    </div>
+                    <div class="plan-detail">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Less% in Plan {{i+1}}</mat-label>
+                            <input matInput [(ngModel)]="plan.lessOfPlan" (change)="lessPlan(plan)">
+                        </mat-form-field>
+                    </div>
+                    <div class="plan-detail">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Final Total</mat-label>
+                            <input matInput [(ngModel)]="plan.finalTotal">
+                        </mat-form-field>
+                    </div>
+                </section>
+            </div>
             <div class="button-right text-end">
                 <button class="btn save-btn" *ngIf="isUpdate == false" (click)="submit()">Submit</button>
                 <button class="btn save-btn" *ngIf="isUpdate == true" (click)="update()">Update</button>
