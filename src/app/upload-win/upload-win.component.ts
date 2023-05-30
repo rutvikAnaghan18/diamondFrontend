@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import * as XLSX from 'xlsx';
 import { ProductServiceService } from '../product-service.service';
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-upload-win',
@@ -16,12 +18,27 @@ export class UploadWinComponent implements OnInit {
   arrayList : any[] = []
 
   constructor(private toastr: ToastrService,
-    private diamondService: ProductServiceService) { }
+    private diamondService: ProductServiceService,
+    private location: Location,
+    private router: Router) { }
 
   ngOnInit(): void {
+    this.verifyToken();
+  }
+
+  verifyToken(){
+    const token = sessionStorage.getItem('token');
+    if (token == '' || token == null || token == undefined) {
+      this.router.navigate(['login'])
+    }else{
+      return ;
+    }
+  }
+
+  goback(){
+    this.location.back();
   }
   
-
   uploadFile(event: any) {
     this.file = event.target.files[0];
     let fileReader = new FileReader();

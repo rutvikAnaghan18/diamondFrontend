@@ -44,15 +44,19 @@
             </div>
             <div class="stoneFL flex-col width-300 mrg-25">
                 <label for="" class="stone-font">Tention</label>
-                <input type="number" placeholder="Enter Tention" [(ngModel)]="tention" class="form-control stoneField"
+                <input type="text" placeholder="Enter Tention" [(ngModel)]="tention" class="form-control stoneField"
                     name="" id="">
             </div>
         </div>
 
         <div class="stone-box">
             <div class="video-input mrg-25">
-                <img [src]="url" height="200" alt="" *ngIf="image_uploaded"> <br>
-                <input type="file" (change)="addfile($event)" [(ngModel)]="imageFile">
+                <div class="upload">
+                    <input type="file" class="image" (change)="addfile($event)" [(ngModel)]="imageFile">
+                </div>
+                <div class="image_uploaded_box" *ngIf="image_uploaded">
+                    <img [src]="url" height="200" alt="">
+                </div>
             </div>
             <div class="machine-table">
                 <table class="table">
@@ -66,14 +70,54 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="text-center">A</td>
-                            <td>TLB</td>
-                            <td>002</td>
-                            <td>After Ghat</td>
-                            <td class="va-m txt-a-m cursor-point">
-                                <i class="fa-solid fa-floppy-disk"></i>
+                        <tr *ngFor="let colorMeasure of colourMeasureReading">
+                            <td class="va-m txt-a-m color-input">
+                                <div class="flex-col mrg-10">
+                                    <mat-form-field class="color-machine" appearance="fill">
+                                        <mat-label>Result</mat-label>
+                                        <input matInput placeholder="" [(ngModel)]="colorMeasure.result"
+                                            value="{{colorMeasure.result}}">
+                                    </mat-form-field>
+                                </div>
                             </td>
+                            <td class="va-m txt-a-m color-input">
+                                <div class="flex-col mrg-10">
+                                    <mat-form-field class="color-machine" appearance="fill">
+                                        <mat-label>Colour Measure</mat-label>
+                                        <input matInput placeholder="" [(ngModel)]="colorMeasure.colorMeasure"
+                                            value="{{colorMeasure.colorMeasure}}">
+                                    </mat-form-field>
+                                </div>
+                            </td>
+                            <td class="va-m txt-a-m color-input">
+                                <div class="flex-col mrg-10">
+                                    <mat-form-field class="color-machine" appearance="fill">
+                                        <mat-label>Reading</mat-label>
+                                        <input matInput placeholder="" [(ngModel)]="colorMeasure.reading"
+                                            value="{{colorMeasure.reading}}">
+                                    </mat-form-field>
+                                </div>
+                            </td>
+                            <td class="va-m txt-a-m color-input">
+                                <div class="flex-col mrg-10">
+                                    <mat-form-field class="color-machine" appearance="fill">
+                                        <mat-label>Comment</mat-label>
+                                        <input matInput placeholder="" [(ngModel)]="colorMeasure.comment"
+                                            value="{{colorMeasure.comment}}">
+                                    </mat-form-field>
+                                </div>
+                            </td>
+                            <td class="va-m txt-a-m cursor-point">
+                                <p (click)="addColorMeasure()" class="va-m txt-a-m"><i class="fa-solid fa-floppy-disk"></i></p>
+                            </td>
+                        </tr>
+
+                        <tr *ngFor="let color of colorReadings; let i = index">
+                            <td>{{color.result}}</td>
+                            <td>{{color.colorMeasure}}</td>
+                            <td>{{color.reading}}</td>
+                            <td>{{color.comment}}</td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </table>
@@ -93,13 +137,15 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col" style="border-top-left-radius: 15px; border-top: none; width:20px;">No.</th>
+                                <th scope="col" style="border-top-left-radius: 15px; border-top: none; width:20px;">No.
+                                </th>
                                 <th scope="col" style="width:110px;">Shape</th>
                                 <th scope="col" style="width:112px;">Weight</th>
                                 <th scope="col" style="width:110px;">Color</th>
                                 <th scope="col" style="width:110px;">Purity</th>
                                 <th scope="col" style="width:110px;" *ngIf="isSearchHide == true">C/P/S</th>
-                                <th scope="col" style="width: 110px; padding-right: 0px;" *ngIf="isSearchHide == true">RAP Price/CT</th>
+                                <th scope="col" style="width: 110px; padding-right: 0px;" *ngIf="isSearchHide == true">
+                                    RAP Price/CT</th>
                                 <th scope="col" style="width:110px;" *ngIf="isSearchHide == true">Discount(%)</th>
                                 <th scope="col" style="width:110px;" *ngIf="isSearchHide == true">Price/CT</th>
                                 <th scope="col" style="width:100px;" *ngIf="isSearchHide == true">Total</th>
@@ -133,13 +179,15 @@
                                             <div class="flex-col mrg-10">
                                                 <mat-form-field appearance="fill" *ngIf="plan.isColorMannual == false">
                                                     <mat-label>Color</mat-label>
-                                                    <mat-select [(ngModel)]="plan.color" (selectionChange)="changeColor(plan)">
+                                                    <mat-select [(ngModel)]="plan.color"
+                                                        (selectionChange)="changeColor(plan)">
                                                         <mat-option *ngFor="let color of colors" [value]="color.value">
                                                             {{color.value}}
                                                         </mat-option>
                                                     </mat-select>
                                                 </mat-form-field>
-                                                <mat-form-field class="example-full-width" *ngIf="plan.isColorMannual == true" appearance="fill">
+                                                <mat-form-field class="example-full-width"
+                                                    *ngIf="plan.isColorMannual == true" appearance="fill">
                                                     <mat-label>Color</mat-label>
                                                     <input matInput placeholder="" [(ngModel)]="plan.color"
                                                         value="{{plan.color}}">
@@ -174,8 +222,8 @@
                                             <div class="flex-col mrg-10" *ngIf="plan.search == true">
                                                 <mat-form-field class="example-full-width" appearance="fill">
                                                     <mat-label>Discount</mat-label>
-                                                    <input matInput placeholder="" (change)="addDiscount(plan)" [(ngModel)]="plan.discount"
-                                                        value="{{plan.discount}}">
+                                                    <input matInput placeholder="" (change)="addDiscount(plan)"
+                                                        [(ngModel)]="plan.discount" value="{{plan.discount}}">
                                                 </mat-form-field>
                                             </div>
                                             <div class="flex-col mrg-10" *ngIf="plan.search == true">
@@ -192,8 +240,8 @@
                                                         value="{{plan.totalPrice}}">
                                                 </mat-form-field>
                                             </div>
-                                            <div class="va-m txt-a-m cursor-point" style="width: 100%; margin-top: 7px;" (click)="SubmitPlan(k)"
-                                                *ngIf="plan.search == true">
+                                            <div class="va-m txt-a-m cursor-point" style="width: 100%; margin-top: 7px;"
+                                                (click)="SubmitPlan(k)" *ngIf="plan.search == true">
                                                 <i class="fa-solid fa-floppy-disk"></i>
                                             </div>
                                         </div>

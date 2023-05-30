@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ProductServiceService } from '../product-service.service';
 import { ThemePalette } from '@angular/material/core';
@@ -24,13 +24,15 @@ export class HomeComponent implements OnInit {
   time: FormControl;
   date: FormControl;
   isshowPlanB: boolean = false;
+  colourMeasureReading: any[] = [];
+  colorReadings: any[] = [];
   planTable: any[] = [];
   planFormTable: any[] = [];
   tenderName: String;
   stoneId: Number = NaN;
   stoneWeight: Number = NaN;
   stoneFL: String;
-  tention: Number = NaN;
+  tention: String = '';
   imageFile: any;
   isUpdate: boolean = false;
   productId: Number;
@@ -38,39 +40,39 @@ export class HomeComponent implements OnInit {
   file: File;
   arrayBuffer: any;
   filelist: any;
-  url : String = "";
-  image_uploaded : Boolean = false;
+  url: String = "";
+  image_uploaded: Boolean = false;
   isSearchHide: Boolean = false;
 
   planDetailArray: any[] = [];
 
-  planShow : Boolean = false;
+  planShow: Boolean = false;
 
   shapes: Shape[] = [
     {
       id: '1',
       value: 'RD'
-    },   
+    },
     {
       id: '2',
       value: 'MQ'
-    },   
+    },
     {
       id: '3',
       value: 'OV'
-    },   
+    },
     {
       id: '4',
       value: 'PE'
-    },   
+    },
     {
       id: '5',
       value: 'PR'
-    },   
+    },
     {
       id: '6',
       value: 'HT'
-    },   
+    },
     {
       id: '7',
       value: 'CUS'
@@ -92,76 +94,79 @@ export class HomeComponent implements OnInit {
   colors: Shape[] = [
     {
       id: '1',
-      value:'D'
+      value: 'D'
     },
     {
       id: '2',
-      value:'E'
+      value: 'E'
     },
     {
       id: '3',
-      value:'F'
+      value: 'F'
     },
     {
       id: '4',
-      value:'G'
+      value: 'G'
     },
     {
       id: '5',
-      value:'H'
+      value: 'H'
     },
     {
       id: '5',
-      value:'I'
+      value: 'I'
     },
     {
       id: '6',
-      value:'J'
+      value: 'J'
     },
     {
       id: '7',
-      value:'K'
+      value: 'K'
     },
     {
       id: '8',
-      value:'L'
+      value: 'L'
     },
     {
       id: '9',
-      value:'M'
+      value: 'M'
     },
     {
       id: '10',
-      value:'N'
+      value: 'N'
     },
     {
       id: '11',
-      value:'O'
+      value: 'O'
     },
     {
       id: '12',
-      value:'1'
+      value: '1'
     },
     {
       id: '13',
-      value:'LB'
+      value: 'LB'
     },
     {
       id: '14',
-      value:'FN'
+      value: 'FN'
     },
   ]
 
   constructor(private toastr: ToastrService,
     private diamondService: ProductServiceService,
     private http: HttpClient,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private router: Router) {
     this.date = new FormControl('', Validators.required)
     this.time = new FormControl('', Validators.required)
   }
 
 
   ngOnInit(): void {
+    this.verifyToken();
+
     this.route.params.subscribe((params: Params) => {
       this.productId = params['id'];
 
@@ -175,6 +180,14 @@ export class HomeComponent implements OnInit {
     var dateTime = new Date();
     this.date.setValue(dateTime.toISOString().slice(0, 10))
     this.time.setValue(dateTime.toTimeString().slice(0, 5))
+
+    this.colourMeasureReading.push([{
+      result: '',
+      colorMeasure: '',
+      reading: '',
+      comment: ''
+    }])
+
     this.planFormTable.push([{
       shape: '',
       weight: '',
@@ -196,23 +209,55 @@ export class HomeComponent implements OnInit {
       finalTotal: ''
     })
 
+    // this.colorReadings.push([]);
   }
 
-  lessPlan(plan: any){
+
+  verifyToken(){
+    const token = sessionStorage.getItem('token');
+    if (token == '' || token == null || token == undefined) {
+      this.router.navigate(['login'])
+    }else{
+      this.router.navigate(['']);
+    }
+  }
+
+  lessPlan(plan: any) {
     var totalPlanPrice = plan.totalPlanPrice
-    var lessAmount = totalPlanPrice * plan.lessOfPlan/100;
+    var lessAmount = totalPlanPrice * plan.lessOfPlan / 100;
     plan.finalTotal = totalPlanPrice - lessAmount
   }
 
-  changeColor(plan : any){
+  changeColor(plan: any) {
     var color = plan.color;
     if (color == "FN") {
       plan.isColorMannual = true;
       plan.search = true;
       this.isSearchHide = true;
-    }else{
+    } else {
       plan.isColorMannual = false;
       plan.search = false;
+    }
+  }
+
+  addColorMeasure() {
+    var pushObject = {
+      result: this.colourMeasureReading[0].result,
+      colorMeasure: this.colourMeasureReading[0].colorMeasure,
+      reading: this.colourMeasureReading[0].reading,
+      comment: this.colourMeasureReading[0].comment
+    }
+
+    console.log(pushObject);
+
+    if ((pushObject.result === '' || pushObject.result === undefined) || (pushObject.colorMeasure === '' || pushObject.colorMeasure === undefined) || (pushObject.reading === '' || pushObject.reading === undefined) || (pushObject.comment === '' || pushObject.comment === undefined)) {
+      this.toastr.error("Fill All Details In Color Machine Table!")
+    } else {
+      this.colorReadings.push(pushObject)
+      this.colourMeasureReading[0].result = '';
+      this.colourMeasureReading[0].colorMeasure = '';
+      this.colourMeasureReading[0].reading = '';
+      this.colourMeasureReading[0].comment = '';
     }
   }
 
@@ -258,9 +303,6 @@ export class HomeComponent implements OnInit {
           finalTotal: ''
         })
       }
-
-
-      console.log(this.planDetailArray)
 
       this.planFormTable[index][length - 1].shape = ""
       this.planFormTable[index][length - 1].weight = ""
@@ -471,7 +513,7 @@ export class HomeComponent implements OnInit {
     this.stoneId = NaN;
     this.stoneWeight = NaN;
     this.stoneFL = '';
-    this.tention = NaN;
+    this.tention = '';
     this.date.reset();
     this.time.reset();
     var dateTime = new Date();

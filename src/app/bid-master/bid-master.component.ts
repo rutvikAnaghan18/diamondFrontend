@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ProductServiceService } from '../product-service.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-bid-master',
@@ -12,11 +13,22 @@ export class BidMasterComponent implements OnInit {
 
   bidList: any[] = [];
 
-  constructor(private route: Router, private diamondService: ProductServiceService, private toastr: ToastrService) {
+  constructor(private route: Router, private diamondService: ProductServiceService, private toastr: ToastrService,
+    private location: Location) {
   }
 
   ngOnInit(): void {
+    this.verifyToken();
     this.getListOfBids();
+  }
+
+  verifyToken(){
+    const token = sessionStorage.getItem('token');
+    if (token == '' || token == null || token == undefined) {
+      this.route.navigate(['login'])
+    }else{
+      return ;
+    }
   }
 
   viewProduct(product: any){
@@ -27,6 +39,10 @@ export class BidMasterComponent implements OnInit {
     this.diamondService.ListBids().subscribe((res: any) => {
       this.bidList = res
     })
+  }
+
+  goback(){
+    this.location.back();
   }
 
   // deleteBid(prod: any){

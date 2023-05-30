@@ -69,11 +69,7 @@
     font-size: 17px;
 }
 
-.files ul li a .fa-file{
-    margin-right: 8px;
-}
-
-.files ul li a .fa-download{
+.mrg-right-8px{
     margin-right: 8px;
 }
 
@@ -87,4 +83,13 @@
 
 .loginContainer{
     margin-top: 0px !important;
+}
+
+.shreeji{
+    font-size: 20px !important;
+    font-weight: 600;
+}
+
+.cursor-point{
+    cursor: pointer;
 }

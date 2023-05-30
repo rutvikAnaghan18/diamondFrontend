@@ -104,4 +104,9 @@ export class ProductServiceService {
   ListWins():Observable<any>{
     return this.http.get(this.BASE_URL + `/api/goods/ListWins`);
   }
+
+  Login(data: any):Observable<any>{
+    return this.http.post<any>(this.BASE_URL+ `/api/admin/login`, data)
+  }
+
 }

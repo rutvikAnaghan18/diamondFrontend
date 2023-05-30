@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ProductServiceService } from '../product-service.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-master',
@@ -12,11 +13,26 @@ export class MasterComponent implements OnInit {
 
   productList: any[] = [];
 
-  constructor(private route: Router, private diamondService: ProductServiceService, private toastr: ToastrService) {
+  constructor(private route: Router, private diamondService: ProductServiceService, private toastr: ToastrService,
+    private location: Location) {
   }
 
   ngOnInit(): void {
+    this.verifyToken();
     this.getListOfProduct();
+  }
+
+  verifyToken(){
+    const token = sessionStorage.getItem('token');
+    if (token == '' || token == null || token == undefined) {
+      this.route.navigate(['login'])
+    }else{
+      return ;
+    }
+  }
+
+  goback(){
+    this.location.back();
   }
 
   viewProduct(product: any){

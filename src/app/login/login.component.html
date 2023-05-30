@@ -1,19 +1,21 @@
 <div class="LoginContainer">
     <div class="loginCard flex-col">
-        <div class="loginHeader">Login</div>
-        <div class="userId flex-col mrg-top-20">
-            <label for="">Username / Email :</label>
-            <input type="text" class="form-control mrg-input login-input" placeholder="Enter Username / Email">
-        </div>
-        <div class="password flex-col mrg-top-20">
-            <label for="">Password :</label>
-            <input type="password" class="form-control mrg-input login-input" placeholder="Enter Password">
-        </div>
-        <div class="loginBtn">
-            <button class="btn center">Login</button>
-        </div>
-        <div class="lorem">
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing.</p>
-        </div>
+        <form [formGroup]="loginForm">
+            <div class="loginHeader">Login</div>
+            <div class="userId flex-col mrg-top-20">
+                <label for="">Username / Email :</label>
+                <input type="text" formControlName="username" class="form-control mrg-input login-input" placeholder="Enter Username / Email">
+            </div>
+            <div class="password flex-col mrg-top-20">
+                <label for="">Password :</label>
+                <input type="password" formControlName="password" class="form-control mrg-input login-input" placeholder="Enter Password">
+            </div>
+            <div class="loginBtn">
+                <button class="btn center" (click)="login()">Login</button>
+            </div>
+            <div class="lorem">
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing.</p>
+            </div>
+        </form>
     </div>
 </div>

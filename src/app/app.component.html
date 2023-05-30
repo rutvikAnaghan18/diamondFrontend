@@ -1,24 +1,25 @@
 <div class="mainContainer">
-    <div class="header" *ngIf="!isLogin">
+    <div class="header" *ngIf="isLogin === false">
         <div class="navbar">
-            <div class="nav-logo cursor-point">Logo</div>
+            <div class="nav-logo"><a class="cursor-point shreeji" (click)="home()">Shreeji</a></div>
             <div class="nav-user">
                 <i class="fa-solid fa-user cursor-point"></i>
             </div>
         </div>
     </div>
-    <div class="container" *ngIf="!isLogin">
+    <div class="container" *ngIf="isLogin === false">
         <div class="sidebar" >
             <div class="files">
                 <ul>
-                    <li><a class="cursor-point" routerLink="/master"><i class="fa-solid fa-file"></i>Master</a></li>
-                    <li><a class="cursor-point" routerLink="/bid-master"><i class="fa-solid fa-file"></i>Bid Master</a></li>
-                    <li><a class="cursor-point" routerLink="/win-master"><i class="fa-solid fa-file"></i>Win Master</a></li>
-                    <li><a class="cursor-point" routerLink="/uploadWin"><i class="fa-solid fa-file"></i>Upload Win/Sold</a></li>
-                    <li><a class="cursor-point" routerLink="/uploadBid"><i class="fa-solid fa-file"></i>Upload Bid</a></li>
-                    <li><a class="cursor-point" routerLink="/uploadSheet"><i class="fa-solid fa-file"></i>Upload Excel</a></li>
-                    <li><a class="cursor-point"><i class="fa-solid fa-download"></i>Download PDF</a></li>
-                    <li><a class="cursor-point"><i class="fa-solid fa-download"></i>Download Excel</a></li>
+                    <li><a class="cursor-point" routerLink="/master"><i class="fa-solid fa-house mrg-right-8px" (click)="home()"></i>Dashboard</a></li>
+                    <li><a class="cursor-point" routerLink="/master"><i class="fa-solid fa-brain mrg-right-8px"></i>Master</a></li>
+                    <li><a class="cursor-point" routerLink="/bid-master"><i class="fa-solid fa-cannabis mrg-right-8px"></i>Bid Master</a></li>
+                    <li><a class="cursor-point" routerLink="/win-master"><i class="fa-solid fa-crown mrg-right-8px"></i>Win Master</a></li>
+                    <li><a class="cursor-point" routerLink="/uploadWin"><i class="fa-solid fa-cloud-arrow-up mrg-right-8px"></i>Upload Win/Sold</a></li>
+                    <li><a class="cursor-point" routerLink="/uploadBid"><i class="fa-solid fa-cloud-arrow-up mrg-right-8px"></i>Upload Bid</a></li>
+                    <li><a class="cursor-point" routerLink="/uploadSheet"><i class="fa-solid fa-cloud-arrow-up mrg-right-8px"></i>Upload Excel</a></li>
+                    <li><a class="cursor-point"><i class="fa-solid fa-cloud-arrow-down mrg-right-8px"></i>Download PDF</a></li>
+                    <li><a class="cursor-point"><i class="fa-solid fa-cloud-arrow-down mrg-right-8px"></i>Download Excel</a></li>
                 </ul>
             </div>
         </div>
@@ -26,7 +27,7 @@
             <router-outlet></router-outlet>
         </div>
     </div>
-    <div class="container loginContainer" *ngIf="isLogin">
+    <div class="container loginContainer" *ngIf="isLogin === true">
         <div class="remaining-login">
             <router-outlet></router-outlet>
         </div>

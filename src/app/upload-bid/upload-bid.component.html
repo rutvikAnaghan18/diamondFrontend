@@ -1,17 +1,20 @@
-<div class="main-section">
+<div class="master-section">
     <div class="main-section-header">
-        Upload Bid Excel
+        <a (click)="goback()"><i class="fa-solid fa-arrow-left cursor-pointer"></i></a> Upload Bid Excel
     </div>
+    <div class="main-section">
 
-    <div class="main-body">
-        <div class="input-field">
-            <label for="" class="inp-text">Upload Data Sheet</label>
-            <input type="file" class="inp" (change)="uploadFile($event)" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
+        <div class="main-body">
+            <div class="input-field">
+                <label for="" class="inp-text">Upload Data Sheet</label>
+                <input type="file" class="inp" (change)="uploadFile($event)"
+                    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+            </div>
+
+            <div class="submit-button text-end">
+                <button class="btn search-btn" (click)="submit()">Submit</button>
+            </div>
         </div>
 
-        <div class="submit-button text-end">
-            <button class="btn search-btn" (click)="submit()">Submit</button>
-        </div>
     </div>
-    
 </div>

@@ -1,47 +1,48 @@
-<div class="main-section">
+<div class="master-section">
     <div class="main-section-header">
-        Shreeji
+        <a (click)="goback()"><i class="fa-solid fa-arrow-left cursor-pointer"></i></a> Win Master
     </div>
+    <div class="main-section">
+        <div class="main-body">
 
-    <div class="main-body">
+            <div class="stone-box">
 
-        <div class="stone-box">
-            
-            <div class="machine-table">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <!-- <th scope="col" style="border-top-left-radius: 15px; border-top: none;">Tender Name</th> -->
-                            <th scope="col" style="border-top-left-radius: 15px; border-top: none;">Stone Id</th>
-                            <th scope="col">Stone Weight</th>
-                            <th scope="col">Base Price/CT</th>
-                            <th scope="col">Total Base Price</th>
-                            <th scope="col">Bid Price/CT</th>
-                            <th scope="col">Bid</th>
-                            <th scope="col">Won Price/CT</th>
-                            <th scope="col">Won Price</th>
-                            <th scope="col">Won/Sold</th>
-                            <th scope="col" style="border-top-right-radius: 15px; border-top: none;">Diff</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let win of winList; let i = index">
-                            <!-- <td scope="col" style="border-top-left-radius: 15px; border-top: none;">Aphelios Solutions</td> -->
-                            <td scope="col">{{win.stoneId}}</td>
-                            <td scope="col">{{win.stoneWeight}}</td>
-                            <td scope="col">{{win.basePricePerCT}}</td>
-                            <td scope="col">{{win.totalBasePrice}}</td>
-                            <td scope="col">{{win.bidPricePerCT}}</td>
-                            <td scope="col">{{win.bidPrice}}</td>
-                            <td scope="col">{{win.wonPricePerCT}}</td>
-                            <td scope="col">{{win.wonPrice}}</td>
-                            <td scope="col">{{win.wonSold}}</td>
-                            <td scope="col">{{win.difference}}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="machine-table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <!-- <th scope="col" style="border-top-left-radius: 15px; border-top: none;">Tender Name</th> -->
+                                <th scope="col" style="border-top-left-radius: 15px; border-top: none;">Stone Id</th>
+                                <th scope="col">Stone Weight</th>
+                                <th scope="col">Base Price/CT</th>
+                                <th scope="col">Total Base Price</th>
+                                <th scope="col">Bid Price/CT</th>
+                                <th scope="col">Bid</th>
+                                <th scope="col">Won Price/CT</th>
+                                <th scope="col">Won Price</th>
+                                <th scope="col">Won/Sold</th>
+                                <th scope="col" style="border-top-right-radius: 15px; border-top: none;">Diff</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let win of winList; let i = index">
+                                <!-- <td scope="col" style="border-top-left-radius: 15px; border-top: none;">Aphelios Solutions</td> -->
+                                <td scope="col">{{win.stoneId}}</td>
+                                <td scope="col">{{win.stoneWeight}}</td>
+                                <td scope="col">{{win.basePricePerCT}}</td>
+                                <td scope="col">{{win.totalBasePrice}}</td>
+                                <td scope="col">{{win.bidPricePerCT}}</td>
+                                <td scope="col">{{win.bidPrice}}</td>
+                                <td scope="col">{{win.wonPricePerCT}}</td>
+                                <td scope="col">{{win.wonPrice}}</td>
+                                <td scope="col">{{win.wonSold}}</td>
+                                <td scope="col">{{win.difference}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
 
+        </div>
     </div>
 </div>

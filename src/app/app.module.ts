@@ -22,6 +22,9 @@ import { UploadBidComponent } from './upload-bid/upload-bid.component';
 import { UploadWinComponent } from './upload-win/upload-win.component';
 import { BidMasterComponent } from './bid-master/bid-master.component';
 import { WinMasterComponent } from './win-master/win-master.component';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -51,7 +54,9 @@ import { WinMasterComponent } from './win-master/win-master.component';
       timeOut: 1500,
       positionClass: 'toast-top-right'
     }),
-    MatInputModule
+    MatInputModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore())
   ],
   providers: [],
   bootstrap: [AppComponent]

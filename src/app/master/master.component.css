@@ -7,13 +7,18 @@
     border-radius: 20px;
     background: white;
     overflow: auto;
+    margin-top: 15px;
 }
 
-.main-section .main-section-header{
+.master-section .main-section-header{
     font-size: 20px;
     font-weight: 700;
-    margin: 9px;
-    padding: 10px;
+    margin: 15px;
+    padding-left: 22px;
+}
+
+.master-section .main-section-header .fa-arrow-left{
+    margin-right: 7px;
 }
 
 .main-section .main-body{

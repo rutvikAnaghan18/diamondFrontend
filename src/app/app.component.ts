@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ export class AppComponent {
 
   isLogin: boolean = false;
 
-  constructor() {
+  constructor(private router: Router) {
 
   }
 
@@ -19,7 +20,34 @@ export class AppComponent {
     if(window.location.pathname == '/login'){
       this.isLogin = true
     }else{
+      console.log("path", this.isLogin)
       this.isLogin = false
+    }
+    
+    if(window.location.pathname != '/login'){
+      console.log("path", this.isLogin)
+      this.isLogin = false
+    }else{
+      this.isLogin = true
+    }
+
+    this.verifyToken();
+    // setTimeout(this.verifyToken, 1000)
+  }
+
+  home(){
+    this.router.navigate(['home'])
+  }
+
+  verifyToken(){
+    const token = sessionStorage.getItem('token');
+    console.log(token);
+    if (token == '' || token == null || token == undefined) {
+      console.log("isLogin", this.isLogin)
+      this.isLogin = true;
+    }else{
+      console.log("isLogin", this.isLogin)
+      this.isLogin = false;
     }
   }
 

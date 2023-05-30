@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "shreejidiamond-7ee6f"
+  },
+  "targets": {
+    "shreeji-b9e45": {
+      "hosting": {
+        "diamond": [
+          "shreeji-b9e45"
+        ]
+      }
+    }
+  }
+}
