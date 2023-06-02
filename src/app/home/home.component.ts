@@ -165,22 +165,10 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.verifyToken();
-
-    this.route.params.subscribe((params: Params) => {
-      this.productId = params['id'];
-
-      if (this.productId) {
-        this.isUpdate = true;
-        this.getProductById(this.productId);
-      }
-
-    })
 
     var dateTime = new Date();
     this.date.setValue(dateTime.toISOString().slice(0, 10))
     this.time.setValue(dateTime.toTimeString().slice(0, 5))
-
     this.colourMeasureReading.push([{
       result: '',
       colorMeasure: '',
@@ -202,22 +190,36 @@ export class HomeComponent implements OnInit {
       totalPrice: ''
     }])
 
-    this.planTable.push([])
+    this.planTable.push([]);
+
     this.planDetailArray.push({
       totalPlanPrice: '',
       lessOfPlan: '',
       finalTotal: ''
     })
 
+    this.route.params.subscribe((params: Params) => {
+      this.productId = params['id'];
+      if (this.productId) {
+        this.isUpdate = true;
+        this.getProductById(this.productId);
+      } else {
+
+        this.verifyToken();
+      }
+    })
+
     // this.colorReadings.push([]);
+
+
   }
 
 
-  verifyToken(){
+  verifyToken() {
     const token = sessionStorage.getItem('token');
     if (token == '' || token == null || token == undefined) {
       this.router.navigate(['login'])
-    }else{
+    } else {
       this.router.navigate(['']);
     }
   }
@@ -248,9 +250,7 @@ export class HomeComponent implements OnInit {
       comment: this.colourMeasureReading[0].comment
     }
 
-    console.log(pushObject);
-
-    if ((pushObject.result === '' || pushObject.result === undefined) || (pushObject.colorMeasure === '' || pushObject.colorMeasure === undefined) || (pushObject.reading === '' || pushObject.reading === undefined) || (pushObject.comment === '' || pushObject.comment === undefined)) {
+    if ((pushObject.result === '' || pushObject.result === undefined) || (pushObject.colorMeasure === '' || pushObject.colorMeasure === undefined) || (pushObject.reading === '' || pushObject.reading === undefined)) {
       this.toastr.error("Fill All Details In Color Machine Table!")
     } else {
       this.colorReadings.push(pushObject)
@@ -266,16 +266,17 @@ export class HomeComponent implements OnInit {
 
     var totalPricePlan = 0
 
-    if (this.planFormTable[index][length - 1].shape == "" || this.planFormTable[index][length - 1].weight == "" ||
-      this.planFormTable[index][length - 1].color == "" || this.planFormTable[index][length - 1].purity == "" ||
-      this.planFormTable[index][length - 1].cps == "" || this.planFormTable[index][length - 1].rapPrice == "" ||
-      this.planFormTable[index][length - 1].discount == "" || this.planFormTable[index][length - 1].priceCT == "" ||
-      this.planFormTable[index][length - 1].totalPrice == "") {
+    if (this.planFormTable[index][len - 1].shape == "" || this.planFormTable[index][len - 1].weight == "" ||
+      this.planFormTable[index][len - 1].color == "" || this.planFormTable[index][len - 1].purity == "" ||
+      this.planFormTable[index][len - 1].cps == "" || this.planFormTable[index][len - 1].rapPrice == "" ||
+      this.planFormTable[index][len - 1].discount == "" || this.planFormTable[index][len - 1].priceCT == "" ||
+      this.planFormTable[index][len - 1].totalPrice == "") {
 
       this.toastr.error("Please Fill All Plan Details!")
     } else {
 
       for (let i = 0; i < len; i++) {
+
         this.planTable[index].push({
           shape: this.planFormTable[index][i].shape,
           weight: this.planFormTable[index][i].weight,
@@ -403,6 +404,14 @@ export class HomeComponent implements OnInit {
     if (searchObj.shape == '' || searchObj.color == '' || searchObj.weight == '' || searchObj.purity == '') {
       this.toastr.warning("Please Filled All Plan Details!")
     } else {
+
+      if (searchObj.shape == "RD") {
+        searchObj.shape = "BR"
+      }
+
+      console.log(searchObj)
+      console.log(plan)
+
       this.diamondService.searchPlan(searchObj).subscribe((res: any) => {
         if (res && res.length) {
           plan[plan.length - 1][plan[plan.length - 1].length - 1].rapPrice = res[0].price
@@ -448,7 +457,7 @@ export class HomeComponent implements OnInit {
         "stoneFL": this.stoneFL,
         "tention": this.tention,
         "image_url": this.imageFile,
-        "isDeleted": "fasle",
+        "isDeleted": false,
         "plans": this.planTable
       })
 
@@ -536,6 +545,14 @@ export class HomeComponent implements OnInit {
       totalPrice: ''
     }])
     this.planTable.push([])
+
+    this.planShow = false;
+    this.planDetailArray = [];
+    this.planDetailArray.push({
+      totalPlanPrice: '',
+      lessOfPlan: '',
+      finalTotal: ''
+    })
   }
 
   getProductById(id: any) {

@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class ProductServiceService {
 
+  // BASE_URL: String = "http://5.183.9.118:5000"
   BASE_URL: String = "http://localhost:3000"
 
   constructor(private http: HttpClient) { 
@@ -39,24 +40,24 @@ export class ProductServiceService {
   }
 
   deleteListProduct(){
-    return this.http.get('http://localhost:3000/api/goods/DeletedListproducts')
+    return this.http.get(this.BASE_URL + `/api/goods/DeletedListproducts`)
   }
 
   // Plans
   addPlan(data: any):Observable<any>{
-    return this.http.post<any>('http://localhost:3000/api/goods/AddPlans', data)
+    return this.http.post<any>(this.BASE_URL + '/api/goods/AddPlans', data)
   }
 
   deletePlan(id: any):Observable<any>{
-    return this.http.post<any>('http://localhost:3000/api/goods/deleteplan/', id)
+    return this.http.post<any>(this.BASE_URL + '/api/goods/deleteplan/', id)
   }
 
   listPlan(){
-    return this.http.get('http://localhost:3000/api/goods/ListPlans')
+    return this.http.get(this.BASE_URL + '/api/goods/ListPlans')
   }
 
   deletedListPlans(){
-    return this.http.get('http://localhost:3000/api/goods/DeletedListPlans')
+    return this.http.get(this.BASE_URL + '/api/goods/DeletedListPlans')
   }
 
   getPlanById(id: any){

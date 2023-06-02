@@ -7,7 +7,7 @@
     <div class="main-body">
         <div class="input-field">
             <label for="" class="inp-text">Upload Data Sheet</label>
-            <input type="file" class="inp" (change)="uploadFile($event)" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
+            <input type="file" class="inp" #fileInput (change)="uploadFile($event)" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
         </div>
 
         <div class="submit-button text-end">

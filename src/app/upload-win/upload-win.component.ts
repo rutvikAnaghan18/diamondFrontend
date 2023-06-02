@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import * as XLSX from 'xlsx';
 import { ProductServiceService } from '../product-service.service';
@@ -14,8 +14,9 @@ export class UploadWinComponent implements OnInit {
 
   file: File;
   arrayBuffer: any;
-
   arrayList : any[] = []
+
+  @ViewChild('fileInput') fileInput: ElementRef;
 
   constructor(private toastr: ToastrService,
     private diamondService: ProductServiceService,
@@ -62,6 +63,9 @@ export class UploadWinComponent implements OnInit {
     if (this.arrayList) {
       this.diamondService.uploadWinFile(this.arrayList).subscribe((res) => {
         if (res.Response.code == 0) {
+          this.arrayBuffer = "";
+          this.arrayList = [];
+          this.fileInput.nativeElement.value = "";
           this.toastr.success(res.Response.Message)
         }else{
           this.toastr.error(res.Response.Message)

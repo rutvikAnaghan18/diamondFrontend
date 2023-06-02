@@ -65,8 +65,7 @@
                             <th scope="col" style="border-top-left-radius: 15px; border-top: none;">Result</th>
                             <th scope="col">Color Measure</th>
                             <th scope="col">Reading</th>
-                            <th scope="col">Comment</th>
-                            <th scope="col" style="border-top-right-radius: 15px; border-top: none;">Action</th>
+                            <th scope="col" style="border-top-right-radius: 15px; border-top: none;">Comment</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -102,13 +101,10 @@
                                 <div class="flex-col mrg-10">
                                     <mat-form-field class="color-machine" appearance="fill">
                                         <mat-label>Comment</mat-label>
-                                        <input matInput placeholder="" [(ngModel)]="colorMeasure.comment"
+                                        <input matInput placeholder="" (keydown.enter)="addColorMeasure()" [(ngModel)]="colorMeasure.comment"
                                             value="{{colorMeasure.comment}}">
                                     </mat-form-field>
                                 </div>
-                            </td>
-                            <td class="va-m txt-a-m cursor-point">
-                                <p (click)="addColorMeasure()" class="va-m txt-a-m"><i class="fa-solid fa-floppy-disk"></i></p>
                             </td>
                         </tr>
 
@@ -117,7 +113,6 @@
                             <td>{{color.colorMeasure}}</td>
                             <td>{{color.reading}}</td>
                             <td>{{color.comment}}</td>
-                            <td></td>
                         </tr>
                     </tbody>
                 </table>
@@ -148,9 +143,9 @@
                                     RAP Price/CT</th>
                                 <th scope="col" style="width:110px;" *ngIf="isSearchHide == true">Discount(%)</th>
                                 <th scope="col" style="width:110px;" *ngIf="isSearchHide == true">Price/CT</th>
-                                <th scope="col" style="width:100px;" *ngIf="isSearchHide == true">Total</th>
+                                <th scope="col" style="width:150px;" *ngIf="isSearchHide == true">Total</th>
                                 <th scope="col" *ngIf="isSearchHide == true"
-                                    style="border-top-right-radius: 15px; border-top: none;">Action</th>
+                                    style="border-top-right-radius: 15px; border-top: none; text-align: center;">Action</th>
                             </tr>
                         </thead>
                         <tbody class="plan-tbody">
@@ -236,13 +231,9 @@
                                             <div class="flex-col" *ngIf="plan.search == true">
                                                 <mat-form-field class="example-full-width" appearance="fill">
                                                     <mat-label>Total Price</mat-label>
-                                                    <input matInput placeholder="" [(ngModel)]="plan.totalPrice"
+                                                    <input matInput placeholder="" (keydown.enter)="SubmitPlan(k)" [(ngModel)]="plan.totalPrice"
                                                         value="{{plan.totalPrice}}">
                                                 </mat-form-field>
-                                            </div>
-                                            <div class="va-m txt-a-m cursor-point" style="width: 100%; margin-top: 7px;"
-                                                (click)="SubmitPlan(k)" *ngIf="plan.search == true">
-                                                <i class="fa-solid fa-floppy-disk"></i>
                                             </div>
                                         </div>
                                     </div>

@@ -13,6 +13,11 @@ export class WinMasterComponent implements OnInit {
 
   winList: any[] = [];
 
+  pagination = [5, 10, 20, 25]
+  displayPage: number = 10;
+  tablePage: number = 1;
+  tableCount: number = 0;
+
   constructor(private route: Router, private diamondService: ProductServiceService, private toastr: ToastrService,
     private location: Location) {
   }
@@ -43,6 +48,14 @@ export class WinMasterComponent implements OnInit {
     this.diamondService.ListWins().subscribe((res: any) => {
       this.winList = res
     })
+  }
+
+  public onPageSizeChange() {
+    this.tablePage = 1
+  }
+
+  public onTableDataChange(event: any) {
+      this.tablePage = event;
   }
 
 }

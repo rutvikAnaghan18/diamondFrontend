@@ -11,17 +11,18 @@ import { BidMasterComponent } from './bid-master/bid-master.component';
 import { WinMasterComponent } from './win-master/win-master.component';
 
 const routes: Routes = [
-  {path:'home', component: HomeComponent},
-  {path:'home/:id', component: HomeComponent},
-  {path:'',redirectTo:'home', pathMatch:'full'},
-  {path:'login', component:LoginComponent},
-  {path:'pagenotfound', component:PagenotfoundComponent},
-  {path:'master', component:MasterComponent},
-  {path:'uploadSheet', component: UploadDocComponent},
-  {path:'uploadBid', component: UploadBidComponent},
-  {path:'uploadWin', component: UploadWinComponent},
-  {path:'bid-master', component: BidMasterComponent},
-  {path:'win-master', component: WinMasterComponent}
+  { path: 'home', component: HomeComponent },
+  { path: 'home/:id', component: HomeComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'pagenotfound', component: PagenotfoundComponent },
+  { path: 'master', component: MasterComponent },
+  { path: 'uploadSheet', component: UploadDocComponent },
+  { path: 'uploadBid', component: UploadBidComponent },
+  { path: 'uploadWin', component: UploadWinComponent },
+  { path: 'bid-master', component: BidMasterComponent },
+  { path: 'win-master', component: WinMasterComponent },
+  { path: '**', component: PagenotfoundComponent }
 ];
 
 @NgModule({

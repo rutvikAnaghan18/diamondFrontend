@@ -65,13 +65,12 @@
 
 .stone-box {
   display: flex;
-  flex-direction: column;
   margin-top: 25px;
   padding-left: 15px;
 }
 
 .video-input {
-  width: 100%;
+  width: 60%;
   height: 300px;
   display: flex;
   align-items: center;

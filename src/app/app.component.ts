@@ -23,13 +23,6 @@ export class AppComponent {
       console.log("path", this.isLogin)
       this.isLogin = false
     }
-    
-    if(window.location.pathname != '/login'){
-      console.log("path", this.isLogin)
-      this.isLogin = false
-    }else{
-      this.isLogin = true
-    }
 
     this.verifyToken();
     // setTimeout(this.verifyToken, 1000)

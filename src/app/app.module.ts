@@ -25,6 +25,8 @@ import { WinMasterComponent } from './win-master/win-master.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { NgxPaginationModule } from 'ngx-pagination';
+
 
 @NgModule({
   declarations: [
@@ -55,6 +57,7 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
       positionClass: 'toast-top-right'
     }),
     MatInputModule,
+    NgxPaginationModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore())
   ],
