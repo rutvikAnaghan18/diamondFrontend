@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -21,16 +21,32 @@ interface Shape {
 })
 export class HomeComponent implements OnInit {
 
+  @ViewChild('stoneInput') stoneInput: ElementRef;
+  @ViewChild('weightInput') weightInput: ElementRef;
+  @ViewChild('stoneFLInput') stoneFLInput: ElementRef;
+  @ViewChild('tentionInput') tentionInput: ElementRef;
+  @ViewChild('resultInput') resultInput: ElementRef;
+  @ViewChild('colorMeasureInput') colorMeasureInput: ElementRef;
+  @ViewChild('readingInput') readingInput: ElementRef;
+  @ViewChild('commentInput') commentInput: ElementRef;
+  @ViewChild('cpsInput') cpsInput: ElementRef;
+  @ViewChild('rapPriceInput') rapPriceInput: ElementRef;
+  @ViewChild('discountInput') discountInput: ElementRef;
+  @ViewChild('priceInput') priceInput: ElementRef;
+  @ViewChild('totalInput') totalInput: ElementRef;
+
   time: FormControl;
   date: FormControl;
   isshowPlanB: boolean = false;
-  colourMeasureReading: any[] = [];
+  colourMeasureReading: Array<{ result: string, colorMeasure: string, reading: string, comment: string }> = [];
   colorReadings: any[] = [];
   planTable: any[] = [];
-  planFormTable: any[] = [];
+
+  planFormTable: Array<Array<{ shape: string; weight: string; color: string; purity: string; cps: string; search: boolean; isColorMannual: boolean; rapPrice: string; discount: string; priceCT: string; totalPrice: string }>> = [];
+
   tenderName: String;
   stoneId: Number = NaN;
-  stoneWeight: Number = NaN;
+  stoneWeight: any;
   stoneFL: String;
   tention: String = '';
   imageFile: any;
@@ -169,26 +185,30 @@ export class HomeComponent implements OnInit {
     var dateTime = new Date();
     this.date.setValue(dateTime.toISOString().slice(0, 10))
     this.time.setValue(dateTime.toTimeString().slice(0, 5))
-    this.colourMeasureReading.push([{
+
+    this.colourMeasureReading.push({
       result: '',
       colorMeasure: '',
       reading: '',
       comment: ''
-    }])
+    });
 
-    this.planFormTable.push([{
-      shape: '',
-      weight: '',
-      color: '',
-      purity: '',
-      cps: '',
-      search: false,
-      isColorMannual: false,
-      rapPrice: '',
-      discount: '',
-      priceCT: '',
-      totalPrice: ''
-    }])
+    this.planFormTable.push([
+      {
+        shape: '',
+        weight: '',
+        color: '',
+        purity: '',
+        cps: '',
+        search: false,
+        isColorMannual: false,
+        rapPrice: '',
+        discount: '',
+        priceCT: '',
+        totalPrice: ''
+      }
+    ]);
+    
 
     this.planTable.push([]);
 
@@ -210,8 +230,11 @@ export class HomeComponent implements OnInit {
     })
 
     // this.colorReadings.push([]);
+  }
 
-
+  focusNext(event: any, nextInput: HTMLInputElement) {
+    event.preventDefault();
+    nextInput.focus();
   }
 
 
@@ -407,9 +430,9 @@ export class HomeComponent implements OnInit {
 
       if (searchObj.shape == "RD") {
         searchObj.shape = "BR"
-      }else if(searchObj.shape == "BR"){
+      } else if (searchObj.shape == "BR") {
         searchObj.shape = "BR"
-      }else{
+      } else {
         searchObj.shape = "PS"
       }
 
@@ -420,19 +443,19 @@ export class HomeComponent implements OnInit {
             this.planFormTable = plan
             this.isSearchHide = true
             plan[plan.length - 1][plan[plan.length - 1].length - 1].search = true;
-  
+
           } else {
             this.toastr.error("Record Not Found")
           }
         })
-      }else{
+      } else {
         this.diamondService.searchFancyPlan(searchObj).subscribe((res: any) => {
           if (res && res.length) {
             plan[plan.length - 1][plan[plan.length - 1].length - 1].rapPrice = res[0].price
             this.planFormTable = plan
             this.isSearchHide = true
             plan[plan.length - 1][plan[plan.length - 1].length - 1].search = true;
-  
+
           } else {
             this.toastr.error("Record Not Found")
           }
@@ -455,7 +478,7 @@ export class HomeComponent implements OnInit {
     }
 
     if (this.tenderName == '' || this.date.invalid || this.time.invalid || this.stoneId == null || this.stoneWeight == null ||
-      this.stoneFL == '' || this.tention == null || this.imageFile == null) {
+      this.stoneFL == '' || this.tention == null) {
       this.toastr.error("Please Enter ALL Details Of Product!")
     } else if (inValid == true) {
       this.toastr.error("Please Add Atleast 1 Plan!")
