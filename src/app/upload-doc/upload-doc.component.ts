@@ -12,11 +12,14 @@ import { Router } from '@angular/router';
 })
 export class UploadDocComponent implements OnInit {
 
-  file: File;
-  arrayBuffer: any;
-  arrayList: any[] = []
+  Roundfile: File;
+  RoundarrayList: any[] = []
+  
+  Fancyfile: File;
+  FancyarrayList: any[] = []
 
   @ViewChild('fileInput') fileInput: ElementRef;
+  @ViewChild('fancyFileInput') fancyFileInput: ElementRef;
 
   constructor(private toastr: ToastrService,
     private diamondService: ProductServiceService,
@@ -40,17 +43,17 @@ export class UploadDocComponent implements OnInit {
     this.location.back();
   }
 
-  uploadFile(event: any) {
-    this.file = event.target.files[0];
+  uploadRoundFile(event: any) {
+    this.Roundfile = event.target.files[0];
     let fileReader = new FileReader();
     fileReader.onload = (e) => {
       let arrayBuffer = fileReader.result as ArrayBuffer;
       let workbook = XLSX.read(arrayBuffer, { type: 'array' });
       let firstSheetName = workbook.SheetNames[0];
       let worksheet = workbook.Sheets[firstSheetName];
-      this.arrayList = XLSX.utils.sheet_to_json(worksheet, { raw: true, defval: '' });
+      this.RoundarrayList = XLSX.utils.sheet_to_json(worksheet, { raw: true, defval: '' });
   
-      this.arrayList.forEach((row: any) => {
+      this.RoundarrayList.forEach((row: any) => {
         if (row.date && !isNaN(row.date)) {
           let excelDate = parseFloat(row.date);
   
@@ -65,17 +68,59 @@ export class UploadDocComponent implements OnInit {
         }
       });
     };
-    fileReader.readAsArrayBuffer(this.file);
+    fileReader.readAsArrayBuffer(this.Roundfile);
+  }
+  
+  uploadFancyFile(event: any) {
+    this.Fancyfile = event.target.files[0];
+    let fileReader = new FileReader();
+    fileReader.onload = (e) => {
+      let arrayBuffer = fileReader.result as ArrayBuffer;
+      let workbook = XLSX.read(arrayBuffer, { type: 'array' });
+      let firstSheetName = workbook.SheetNames[0];
+      let worksheet = workbook.Sheets[firstSheetName];
+      this.FancyarrayList = XLSX.utils.sheet_to_json(worksheet, { raw: true, defval: '' });
+  
+      this.FancyarrayList.forEach((row: any) => {
+        if (row.date && !isNaN(row.date)) {
+          let excelDate = parseFloat(row.date);
+  
+          let dateObject = XLSX.SSF.parse_date_code(excelDate);
+          let formattedDate = new Date(
+            dateObject.y,
+            dateObject.m - 1,
+            dateObject.d
+          ).toISOString().split('T')[0];
+  
+          row.date = formattedDate;
+        }
+      });
+    };
+    fileReader.readAsArrayBuffer(this.Fancyfile);
   }
 
 
-  submit() {
-    console.log(this.arrayList)
-    if (this.arrayList) {
-      this.diamondService.uploadFile(this.arrayList).subscribe((res) => {
+  uploadFancy() {
+    console.log(this.FancyarrayList)
+    if (this.FancyarrayList) {
+      this.diamondService.uploadFancyFile(this.FancyarrayList).subscribe((res) => {
         if (res.Response.code == 0) {
-          this.arrayList = [];
-          this.arrayBuffer = '';
+          this.FancyarrayList = [];
+          this.fancyFileInput.nativeElement.value = "";
+          this.toastr.success(res.Response.Message)
+        } else {
+          this.toastr.error(res.Response.Message)
+        }
+      })
+    }
+  }
+  
+  uploadRound() {
+    console.log(this.RoundarrayList)
+    if (this.RoundarrayList) {
+      this.diamondService.uploadRoundFile(this.RoundarrayList).subscribe((res) => {
+        if (res.Response.code == 0) {
+          this.RoundarrayList = [];
           this.fileInput.nativeElement.value = "";
           this.toastr.success(res.Response.Message)
         } else {

@@ -407,24 +407,38 @@ export class HomeComponent implements OnInit {
 
       if (searchObj.shape == "RD") {
         searchObj.shape = "BR"
+      }else if(searchObj.shape == "BR"){
+        searchObj.shape = "BR"
+      }else{
+        searchObj.shape = "PS"
       }
 
-      console.log(searchObj)
-      console.log(plan)
-
-      this.diamondService.searchPlan(searchObj).subscribe((res: any) => {
-        if (res && res.length) {
-          plan[plan.length - 1][plan[plan.length - 1].length - 1].rapPrice = res[0].price
-          this.planFormTable = plan
-          this.isSearchHide = true
-          plan[plan.length - 1][plan[plan.length - 1].length - 1].search = true;
-
-        } else {
-          this.toastr.error("Record Not Found")
-        }
-      })
+      if (searchObj.shape == "BR") {
+        this.diamondService.searchRoundPlan(searchObj).subscribe((res: any) => {
+          if (res && res.length) {
+            plan[plan.length - 1][plan[plan.length - 1].length - 1].rapPrice = res[0].price
+            this.planFormTable = plan
+            this.isSearchHide = true
+            plan[plan.length - 1][plan[plan.length - 1].length - 1].search = true;
+  
+          } else {
+            this.toastr.error("Record Not Found")
+          }
+        })
+      }else{
+        this.diamondService.searchFancyPlan(searchObj).subscribe((res: any) => {
+          if (res && res.length) {
+            plan[plan.length - 1][plan[plan.length - 1].length - 1].rapPrice = res[0].price
+            this.planFormTable = plan
+            this.isSearchHide = true
+            plan[plan.length - 1][plan[plan.length - 1].length - 1].search = true;
+  
+          } else {
+            this.toastr.error("Record Not Found")
+          }
+        })
+      }
     }
-
   }
 
   addDiscount(plan: any) {
