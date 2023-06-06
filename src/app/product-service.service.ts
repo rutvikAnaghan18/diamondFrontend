@@ -8,8 +8,8 @@ import { Observable } from 'rxjs';
 })
 export class ProductServiceService {
 
-  // BASE_URL: String = "http://5.183.9.118:5000"
-  BASE_URL: String = "http://localhost:3000"
+  BASE_URL: String = "http://5.183.9.118:5000"
+  // BASE_URL: String = "http://localhost:3000"
 
   constructor(private http: HttpClient) { 
   }
@@ -86,6 +86,10 @@ export class ProductServiceService {
     return this.http.post<any>(this.BASE_URL + `/api/goods/AddWonLoss`, data);
   }
 
+  uploadBaseFile(data: any):Observable<any>{
+    return this.http.post<any>(this.BASE_URL+ '/api/goods/basePrice', data);
+  }
+
 
   // Search
   searchRoundPlan(data: any):Observable<any>{
@@ -116,6 +120,10 @@ export class ProductServiceService {
 
   Login(data: any):Observable<any>{
     return this.http.post<any>(this.BASE_URL+ `/api/admin/login`, data)
+  }
+
+  ListTender():Observable<any>{
+    return this.http.get<any>(this.BASE_URL+ "/api/goods/ListBasePrice")
   }
 
 }

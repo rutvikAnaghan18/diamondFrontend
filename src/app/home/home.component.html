@@ -12,12 +12,12 @@
             </div>
             <div class="stoneWeights flex-col width-300 mrg-25">
                 <label for="" class="stone-font">Date</label>
-                <input type="date" placeholder="Enter Stone Weight" [formControl]="date" class="form-control stoneField"
+                <input type="date" placeholder="Enter Stone Weight" (keydown.enter)="focusNext($event, weightInput)" [formControl]="date" class="form-control stoneField"
                     name="" id="">
             </div>
             <div class="stoneFL flex-col width-300 mrg-25">
                 <label for="" class="stone-font">Time</label>
-                <input type="time" placeholder="Enter Stone FL" [formControl]="time" class="form-control stoneField"
+                <input type="time" placeholder="Enter Stone FL" (keydown.enter)="focusNext($event, weightInput)" [formControl]="time" class="form-control stoneField"
                     name="" id="">
             </div>
             <div class="stoneTention" style="margin-bottom: 16px;">

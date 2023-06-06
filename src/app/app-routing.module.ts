@@ -9,6 +9,7 @@ import { UploadBidComponent } from './upload-bid/upload-bid.component';
 import { UploadWinComponent } from './upload-win/upload-win.component';
 import { BidMasterComponent } from './bid-master/bid-master.component';
 import { WinMasterComponent } from './win-master/win-master.component';
+import { UploadBaseDocComponent } from './upload-base-doc/upload-base-doc.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'uploadWin', component: UploadWinComponent },
   { path: 'bid-master', component: BidMasterComponent },
   { path: 'win-master', component: WinMasterComponent },
+  { path: 'uploadBasePrice', component: UploadBaseDocComponent },
   { path: '**', component: PagenotfoundComponent }
 ];
 

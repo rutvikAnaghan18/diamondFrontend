@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { saveAs } from 'file-saver';
+import * as Papa from 'papaparse';
+import { ProductServiceService } from './product-service.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +14,8 @@ export class AppComponent {
 
   isLogin: boolean = false;
 
-  constructor(private router: Router) {
+  constructor(private router: Router,
+    private diamondService: ProductServiceService) {
 
   }
 
@@ -43,5 +47,22 @@ export class AppComponent {
       this.isLogin = false;
     }
   }
+
+  downloadCSV(): void {
+    
+    this.diamondService.ListTender().subscribe((data) => {
+      console.log(data);
+      const csv = this.convertToCSV(data);
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+      saveAs(blob, 'data.csv');
+    })
+  
+  }
+
+  convertToCSV(data: any[]): string {
+    const csv = Papa.unparse(data);
+    return csv;
+  }
+  
 
 }

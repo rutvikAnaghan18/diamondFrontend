@@ -26,6 +26,7 @@ import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { UploadBaseDocComponent } from './upload-base-doc/upload-base-doc.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     UploadBidComponent,
     UploadWinComponent,
     BidMasterComponent,
-    WinMasterComponent
+    WinMasterComponent,
+    UploadBaseDocComponent,
   ],
   imports: [
     BrowserModule,

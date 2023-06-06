@@ -466,7 +466,7 @@ export class HomeComponent implements OnInit {
 
   addDiscount(plan: any) {
     plan.priceCT = (plan.rapPrice - ((plan.rapPrice * plan.discount) / 100))
-    plan.totalPrice = plan.priceCT * plan.weight
+    plan.totalPrice = Number((plan.priceCT * plan.weight).toFixed(2));
   }
 
   submit() {
@@ -520,7 +520,7 @@ export class HomeComponent implements OnInit {
     }
 
     if (this.tenderName == '' || this.date.invalid || this.time.invalid || this.stoneId == null || this.stoneWeight == null ||
-      this.stoneFL == '' || this.tention == null || this.imageFile == null) {
+      this.stoneFL == '' || this.tention == null) {
       this.toastr.error("Please Enter ALL Details Of Product!")
     } else if (inValid == true) {
       this.toastr.error("Please Add Atleast 1 Plan!")
