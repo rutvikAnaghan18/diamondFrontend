@@ -29,7 +29,7 @@
         <div class="stoneFields">
             <div class="stoneId flex-col width-300 mrg-25">
                 <label for="" class="stone-font">Stone Id</label>
-                <input type="number" placeholder="Enter Stone Id" #stoneInput (keydown.enter)="focusNext($event, weightInput)" [(ngModel)]="stoneId" class="form-control stoneField"
+                <input type="number" placeholder="Enter Stone Id" #stoneInput (keydown.enter)="focusNext($event, weightInput)" (change)="findTender()" [(ngModel)]="stoneId" class="form-control stoneField"
                     name="" id="">
             </div>
             <div class="stoneWeights flex-col width-300 mrg-25">
@@ -197,7 +197,7 @@
                                             </div>
                                             <div *ngIf="plan.search == false" class="search-div">
                                                 <button class="btn btn-primary search-btn"
-                                                    (click)="searchPlan(planFormTable)">Search</button>
+                                                    (click)="searchPlan(plan)">Search</button>
                                             </div>
 
                                             <div class="flex-col mrg-10" *ngIf="plan.search == true">
@@ -264,7 +264,7 @@
         <div class="row plan-row">
             <div class="select-plan" *ngIf="planDetailArray && planShow">
                 <section class="select-section" *ngFor="let plan of planDetailArray, let i = index;">
-                    <mat-checkbox class="select-margin"></mat-checkbox>
+                    <mat-checkbox class="select-margin" [(ngModel)]="plan.isSelected"></mat-checkbox>
                     <div class="plan-detail">
                         <mat-form-field class="example-full-width" appearance="fill">
                             <mat-label>Plan {{i+1}}</mat-label>

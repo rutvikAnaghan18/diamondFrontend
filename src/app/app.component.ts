@@ -49,8 +49,17 @@ export class AppComponent {
   }
 
   downloadCSV(): void {
-    
     this.diamondService.ListTender().subscribe((data) => {
+      console.log(data);
+      const csv = this.convertToCSV(data);
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+      saveAs(blob, 'data.csv');
+    })
+  
+  }
+  
+  downloadBidCSV(): void {
+    this.diamondService.ListBids().subscribe((data) => {
       console.log(data);
       const csv = this.convertToCSV(data);
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });

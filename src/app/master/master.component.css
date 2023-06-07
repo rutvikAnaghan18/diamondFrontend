@@ -50,3 +50,26 @@
 .cursor-pointer{
     cursor: pointer;
 }
+
+.width-250{
+    width: 250px;
+}
+
+.searchTender{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    position: relative;
+}
+
+.searchTender .stoneField{
+    width: 250px;
+    margin: 10px;
+    margin-bottom: 0px;
+}
+
+.searchTender .fa-magnifying-glass{
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}

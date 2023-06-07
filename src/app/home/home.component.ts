@@ -7,6 +7,7 @@ import { ProductServiceService } from '../product-service.service';
 import { ThemePalette } from '@angular/material/core';
 
 import * as XLSX from 'xlsx';
+import { async } from 'rxjs';
 
 interface Shape {
   id: string;
@@ -61,8 +62,9 @@ export class HomeComponent implements OnInit {
   isSearchHide: Boolean = false;
 
   planDetailArray: any[] = [];
-
   planShow: Boolean = false;
+
+  basePriceArr: any[] = [];
 
   shapes: Shape[] = [
     {
@@ -208,11 +210,12 @@ export class HomeComponent implements OnInit {
         totalPrice: ''
       }
     ]);
-    
+
 
     this.planTable.push([]);
 
     this.planDetailArray.push({
+      isSelected: false,
       totalPlanPrice: '',
       lessOfPlan: '',
       finalTotal: ''
@@ -250,7 +253,7 @@ export class HomeComponent implements OnInit {
   lessPlan(plan: any) {
     var totalPlanPrice = plan.totalPlanPrice
     var lessAmount = totalPlanPrice * plan.lessOfPlan / 100;
-    plan.finalTotal = totalPlanPrice - lessAmount
+    plan.finalTotal = (totalPlanPrice - lessAmount).toFixed(2);
   }
 
   changeColor(plan: any) {
@@ -328,17 +331,17 @@ export class HomeComponent implements OnInit {
         })
       }
 
-      this.planFormTable[index][length - 1].shape = ""
-      this.planFormTable[index][length - 1].weight = ""
-      this.planFormTable[index][length - 1].color = ""
-      this.planFormTable[index][length - 1].purity = ""
-      this.planFormTable[index][length - 1].cps = ""
-      this.planFormTable[index][length - 1].search = false
-      this.planFormTable[index][length - 1].isColorMannual = false
-      this.planFormTable[index][length - 1].rapPrice = ""
-      this.planFormTable[index][length - 1].discount = ""
-      this.planFormTable[index][length - 1].priceCT = ""
-      this.planFormTable[index][length - 1].totalPrice = ""
+      this.planFormTable[index][len - 1].shape = ""
+      this.planFormTable[index][len - 1].weight = ""
+      this.planFormTable[index][len - 1].color = ""
+      this.planFormTable[index][len - 1].purity = ""
+      this.planFormTable[index][len - 1].cps = ""
+      this.planFormTable[index][len - 1].search = false
+      this.planFormTable[index][len - 1].isColorMannual = false
+      this.planFormTable[index][len - 1].rapPrice = ""
+      this.planFormTable[index][len - 1].discount = ""
+      this.planFormTable[index][len - 1].priceCT = ""
+      this.planFormTable[index][len - 1].totalPrice = ""
     }
 
   }
@@ -418,11 +421,17 @@ export class HomeComponent implements OnInit {
     console.log(plan)
 
     var searchObj = {
-      shape: plan[plan.length - 1][plan[plan.length - 1].length - 1].shape,
-      color: plan[plan.length - 1][plan[plan.length - 1].length - 1].color,
-      weight: plan[plan.length - 1][plan[plan.length - 1].length - 1].weight,
-      purity: plan[plan.length - 1][plan[plan.length - 1].length - 1].purity
+      shape: plan.shape,
+      color: plan.color,
+      weight: plan.weight,
+      purity: plan.purity
     }
+    // var searchObj = {
+    //   shape: plan[plan.length - 1][plan[plan.length - 1].length - 1].shape,
+    //   color: plan[plan.length - 1][plan[plan.length - 1].length - 1].color,
+    //   weight: plan[plan.length - 1][plan[plan.length - 1].length - 1].weight,
+    //   purity: plan[plan.length - 1][plan[plan.length - 1].length - 1].purity
+    // }
 
     if (searchObj.shape == '' || searchObj.color == '' || searchObj.weight == '' || searchObj.purity == '') {
       this.toastr.warning("Please Filled All Plan Details!")
@@ -439,11 +448,9 @@ export class HomeComponent implements OnInit {
       if (searchObj.shape == "BR") {
         this.diamondService.searchRoundPlan(searchObj).subscribe((res: any) => {
           if (res && res.length) {
-            plan[plan.length - 1][plan[plan.length - 1].length - 1].rapPrice = res[0].price
-            this.planFormTable = plan
+            plan.rapPrice = res[0].price
             this.isSearchHide = true
-            plan[plan.length - 1][plan[plan.length - 1].length - 1].search = true;
-
+            plan.search = true;
           } else {
             this.toastr.error("Record Not Found")
           }
@@ -451,10 +458,12 @@ export class HomeComponent implements OnInit {
       } else {
         this.diamondService.searchFancyPlan(searchObj).subscribe((res: any) => {
           if (res && res.length) {
-            plan[plan.length - 1][plan[plan.length - 1].length - 1].rapPrice = res[0].price
-            this.planFormTable = plan
+            plan.rapPrice = res[0].price
             this.isSearchHide = true
-            plan[plan.length - 1][plan[plan.length - 1].length - 1].search = true;
+            plan.search = true;
+            // this.planFormTable = plan
+            // plan[plan.length - 1][plan[plan.length - 1].length - 1].rapPrice = res[0].price
+            // plan[plan.length - 1][plan[plan.length - 1].length - 1].search = true;
 
           } else {
             this.toastr.error("Record Not Found")
@@ -469,8 +478,13 @@ export class HomeComponent implements OnInit {
     plan.totalPrice = Number((plan.priceCT * plan.weight).toFixed(2));
   }
 
-  submit() {
+  async submit() {
     var inValid = false;
+
+    var isColorReadingPost = false;
+    var isBidsPost = false;
+    var isTenderPost = false;
+
     for (let i = 0; i < this.planTable.length; i++) {
       if (this.planTable[i].length == 0) {
         inValid = true
@@ -498,21 +512,68 @@ export class HomeComponent implements OnInit {
         "plans": this.planTable
       })
 
-      this.diamondService.addNewProduct(obj[0]).subscribe((res: any) => {
-        if (res.Response) {
-          if (res.Response.code == 0) {
-            this.toastr.success(res.Response.Message)
-            this.resetValues();
-          } else {
-            this.toastr.error("Something Went Wrong!")
-          }
+      var bidArr = new Array();
+
+      for (let i = 0; i < this.planDetailArray.length; i++) {
+        if(this.planDetailArray[i].isSelected === true){
+          bidArr.push({
+            stoneId: this.stoneId,
+            stoneWeight: this.stoneWeight,
+            basePricePerCT: this.basePriceArr[0].basePricePerCT,
+            totalBasePrice: this.basePriceArr[0].basePrice,
+            bidPricePerCT: Number(this.planDetailArray[i].finalTotal)/this.stoneWeight,
+            bidPrice: this.planDetailArray[i].finalTotal
+          })
+        }        
+      }
+
+      var colorReadingsArr = new Array();
+
+      for (let i = 0; i < this.colorReadings.length; i++) {
+        colorReadingsArr.push({
+          stoneId: this.stoneId,
+          result: this.colorReadings[i].result,
+          colorMeasure: this.colorReadings[i].colorMeasure,
+          fluorescenceReading: this.colorReadings[i].reading,
+          comment: this.colorReadings[i].comment
+        })
+      }
+
+      try {
+        const colorResponse = await this.diamondService.addColorMeasurements(colorReadingsArr).toPromise();
+        if (colorResponse.Response && colorResponse.Response.code === 0) {
+          isColorReadingPost = true;
         }
-      })
+    
+        const bidResponse = await this.diamondService.addBids(bidArr).toPromise();
+        if (bidResponse.Response && bidResponse.Response.code === 0) {
+          isBidsPost = true;
+        }
+    
+        const tenderResponse = await this.diamondService.addNewProduct(obj[0]).toPromise();
+        if (tenderResponse.Response && tenderResponse.Response.code === 0) {
+          isTenderPost = true;
+        }
+    
+        if (isBidsPost && isColorReadingPost && isTenderPost) {
+          this.toastr.success("Tender Successfully Saved");
+          this.resetValues();
+        } else {
+          this.toastr.error("Something Went Wrong!");
+        }
+      } catch (error) {
+        console.error(error);
+        this.toastr.error("Something Went Wrong!");
+      }
     }
   }
 
-  update() {
+  async update() {
     var inValid = false;
+    var isColorReadingPost = false;
+    var isBidsPost = false;
+    var isTenderPost = false;
+
     for (let i = 0; i < this.planTable.length; i++) {
       if (this.planTable[i].length == 0) {
         inValid = true
@@ -540,24 +601,84 @@ export class HomeComponent implements OnInit {
         "isDeleted": "fasle",
         "plans": this.planTable
       })
-      console.log(obj)
-      this.diamondService.updateProduct(obj[0], this.productId).subscribe((res: any) => {
-        if (res.Response) {
-          if (res.Response.code == 0) {
-            this.toastr.success(res.Response.Message)
-            this.resetValues();
-          } else {
-            this.toastr.error("Something Went Wrong!")
+
+      // this.diamondService.updateProduct(obj[0], this.productId).subscribe((res: any) => {
+      //   if (res.Response) {
+      //     if (res.Response.code == 0) {
+      //       this.toastr.success(res.Response.Message)
+      //       this.resetValues();
+      //     } else {
+      //       this.toastr.error("Something Went Wrong!")
+      //     }
+      //   }
+      // })
+
+      var bidArr = new Array();
+
+      for (let i = 0; i < this.planDetailArray.length; i++) {
+        if(this.planDetailArray[i].isSelected === true){
+          bidArr.push({
+            stoneId: this.stoneId,
+            stoneWeight: this.stoneWeight,
+            basePricePerCT: this.basePriceArr[0].basePricePerCT,
+            totalBasePrice: this.basePriceArr[0].basePrice,
+            bidPricePerCT: (Number(this.planDetailArray[i].finalTotal)/this.stoneWeight).toFixed(2),
+            bidPrice: this.planDetailArray[i].finalTotal
+          })
+        }        
+      }
+
+      var colorReadingsArr = new Array();
+
+      for (let i = 0; i < this.colorReadings.length; i++) {
+        colorReadingsArr.push({
+          stoneId: this.stoneId,
+          result: this.colorReadings[i].result,
+          colorMeasure: this.colorReadings[i].colorMeasure,
+          fluorescenceReading: this.colorReadings[i].reading,
+          comment: this.colorReadings[i].comment
+        })
+      }
+
+      try {
+        if (colorReadingsArr.length > 0) {
+          const colorResponse = await this.diamondService.updateColorMachineById(colorReadingsArr, this.stoneId).toPromise();
+          if (colorResponse.Response && colorResponse.Response.code === 0) {
+            isColorReadingPost = true;
           }
         }
-      })
+        
+        if (bidArr.length > 0) {
+          const bidResponse = await this.diamondService.updateBidsById(bidArr[0], this.stoneId).toPromise();
+          if (bidResponse.Response && bidResponse.Response.code === 0) {
+            isBidsPost = true;
+          }
+        }else {
+          isBidsPost = false;
+        }
+    
+        const tenderResponse = await this.diamondService.updateProduct(obj[0], this.productId).toPromise();
+        if (tenderResponse.Response && tenderResponse.Response.code === 0) {
+          isTenderPost = true;
+        }
+    
+        if (isBidsPost && isColorReadingPost && isTenderPost) {
+          this.toastr.success("Tender Successfully Saved");
+          this.resetValues();
+        } else {
+          this.toastr.error("Something Went Wrong!");
+        }
+      } catch (error) {
+        console.error(error);
+        this.toastr.error("Something Went Wrong!");
+      }
     }
   }
 
   resetValues() {
     this.tenderName = '';
     this.stoneId = NaN;
-    this.stoneWeight = NaN;
+    this.stoneWeight = "";
     this.stoneFL = '';
     this.tention = '';
     this.date.reset();
@@ -581,6 +702,9 @@ export class HomeComponent implements OnInit {
       priceCT: '',
       totalPrice: ''
     }])
+
+    this.colorReadings = []
+
     this.planTable.push([])
 
     this.planShow = false;
@@ -593,9 +717,16 @@ export class HomeComponent implements OnInit {
   }
 
   getProductById(id: any) {
+    
     this.diamondService.getProductById(id).subscribe((res: any) => {
 
-      console.log(res)
+      this.diamondService.searchColorMachineReadings(res.stoneId).subscribe((res) => {
+        this.colorReadings = res
+        this.colorReadings.map((item) => {
+          item.reading = item.fluorescenceReading
+        })
+      })
+
       this.date.setValue(res.Date.slice(0, 10))
       this.tenderName = res.TenderName
       this.stoneId = res.stoneId
@@ -621,6 +752,31 @@ export class HomeComponent implements OnInit {
         }])
       }
       this.planTable = res.plans
+      
+      var totalPricePlan = 0
+      
+      console.log(this.planTable)
+      this.planDetailArray = [];
+      for (let i = 0; i < this.planTable.length; i++) {
+        totalPricePlan = 0
+        for (let j = 0; j < this.planTable[i].length; j++) {
+          totalPricePlan = totalPricePlan + this.planTable[i][j].totalPrice
+        }
+        this.planShow = true;
+        this.planDetailArray.push({
+          totalPlanPrice: totalPricePlan,
+          lessOfPlan: '',
+          finalTotal: ''
+        })
+      }
+
+      this.findTender();
+      // if (this.planDetailArray[index]) {
+      //   this.planShow = true;
+      //   this.planDetailArray[index].totalPlanPrice = totalPricePlan
+      // } else {
+        
+      // }
     })
   }
 
@@ -645,4 +801,37 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  validTenderName(tenderName: String) {
+    this.diamondService.ListTender().subscribe((res) => {
+      if (res) {
+        tenderName = tenderName + '.xlsx'
+        if (tenderName === res[0].tenderName) {
+          return
+        } else {
+          this.toastr.error("Cannot Find Tender Name!")
+        }
+      }
+    })
+  }
+
+  findTender() {
+    if (this.stoneId == null) {
+      this.toastr.error("Please Provide Stone Id");
+    } else {
+      var tenderObj = {
+        stoneId: this.stoneId
+      };
+  
+      this.diamondService.searchTender(tenderObj).subscribe(async (res) => {
+        this.basePriceArr = await res;
+        console.log(this.basePriceArr);
+        if (this.basePriceArr.length > 0) {
+          this.stoneWeight = this.basePriceArr[0].weight;
+        } else {
+          this.toastr.error("Tender not found for the given Stone Id");
+        }
+      });
+    }
+  }
+  
 }

@@ -8,14 +8,22 @@ import { Observable } from 'rxjs';
 })
 export class ProductServiceService {
 
-  BASE_URL: String = "http://5.183.9.118:5000"
-  // BASE_URL: String = "http://localhost:3000"
+  // BASE_URL: String = "http://5.183.9.118:5000"
+  BASE_URL: String = "http://localhost:3000"
 
   constructor(private http: HttpClient) { 
   }
 
   addNewProduct(data: any):Observable<any>{
     return this.http.post<any>(this.BASE_URL + '/api/goods/AddNewproduct', data)
+  }
+
+  addBids(data: any):Observable<any>{
+    return this.http.post<any>(this.BASE_URL + `/api/goods/AddBids`, data);
+  }
+
+  addColorMeasurements(data: any):Observable<any>{
+    return this.http.post<any>(this.BASE_URL + `/api/goods/AddcolorMachineReading`, data);
   }
 
   // Product
@@ -108,6 +116,14 @@ export class ProductServiceService {
     return this.http.get<any>(this.BASE_URL + `/api/goods/SearchWin/${id}`)
   }
 
+  searchTender(data: any):Observable<any>{
+    return this.http.post<any>(this.BASE_URL + `/api/goods/searchTender`, data)
+  }
+
+  searchColorMachineReadings(id: any):Observable<any>{
+    return this.http.get<any>(this.BASE_URL + `/api/goods/SearchColormachinereadingById/${id}`)
+  }
+
 
   // List
   ListBids():Observable<any>{
@@ -124,6 +140,27 @@ export class ProductServiceService {
 
   ListTender():Observable<any>{
     return this.http.get<any>(this.BASE_URL+ "/api/goods/ListBasePrice")
+  }
+
+  // DELETE
+
+  deleteColorReadings(id: any):Observable<any>{
+    return this.http.get(this.BASE_URL + `/api/goods/deleteColorReadings/${id}`)
+  }
+
+  deleteBids(id: any):Observable<any>{
+    return this.http.get(this.BASE_URL+ `/api/goods/deleteBids/${id}`)
+  }
+
+
+  // Update
+
+  updateBidsById(data: any, id: any):Observable<any>{
+    return this.http.post(this.BASE_URL+ `/api/goods/updateBids/${id}`, data)
+  }
+  
+  updateColorMachineById(data: any, id: any):Observable<any>{
+    return this.http.post(this.BASE_URL+ `/api/goods/updateColorMachineById/${id}`, data)
   }
 
 }
