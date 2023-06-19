@@ -16,10 +16,13 @@
                     <li><a class="cursor-point" routerLink="/bid-master"><i class="fa-solid fa-cannabis mrg-right-8px"></i>Bid Master</a></li>
                     <li><a class="cursor-point" routerLink="/win-master"><i class="fa-solid fa-crown mrg-right-8px"></i>Win Master</a></li>
                     <li><a class="cursor-point" routerLink="/uploadWin"><i class="fa-solid fa-cloud-arrow-up mrg-right-8px"></i>Upload Win/Sold</a></li>
-                    <li><a class="cursor-point" routerLink="/uploadBid"><i class="fa-solid fa-cloud-arrow-up mrg-right-8px"></i>Upload Bid</a></li>
+                    <!-- <li><a class="cursor-point" routerLink="/uploadBid"><i class="fa-solid fa-cloud-arrow-up mrg-right-8px"></i>Upload Bid</a></li> -->
+                    <li><a class="cursor-point" routerLink="/uploadBasePrice"><i class="fa-solid fa-cloud-arrow-up mrg-right-8px"></i>Upload Base Sheet</a></li>
                     <li><a class="cursor-point" routerLink="/uploadSheet"><i class="fa-solid fa-cloud-arrow-up mrg-right-8px"></i>Upload Excel</a></li>
                     <li><a class="cursor-point"><i class="fa-solid fa-cloud-arrow-down mrg-right-8px"></i>Download PDF</a></li>
                     <li><a class="cursor-point"><i class="fa-solid fa-cloud-arrow-down mrg-right-8px"></i>Download Excel</a></li>
+                    <li><a class="cursor-point" (click)="downloadBidCSV()"><i class="fa-solid fa-cloud-arrow-down mrg-right-8px"></i>Download Bid Excel</a></li>
+                    <li><a class="cursor-point" (click)="downloadCSV()"><i class="fa-solid fa-cloud-arrow-down mrg-right-8px"></i>Download Base Excel</a></li>
                 </ul>
             </div>
         </div>

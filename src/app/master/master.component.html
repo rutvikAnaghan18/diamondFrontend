@@ -4,8 +4,11 @@
     </div>
     <div class="main-section">
         <div class="main-body">
+            <div class="flex-col w-100 searchTender">
+                <input type="text" placeholder="Search Tender" (keyup)="search()" class="form-control stoneField" [(ngModel)]="searchTender">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
             <div class="stone-box">
-
                 <div class="machine-table">
                     <table class="table">
                         <thead>

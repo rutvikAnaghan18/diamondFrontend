@@ -18,6 +18,14 @@ export class ProductServiceService {
     return this.http.post<any>(this.BASE_URL + '/api/goods/AddNewproduct', data)
   }
 
+  addBids(data: any):Observable<any>{
+    return this.http.post<any>(this.BASE_URL + `/api/goods/AddBids`, data);
+  }
+
+  addColorMeasurements(data: any):Observable<any>{
+    return this.http.post<any>(this.BASE_URL + `/api/goods/AddcolorMachineReading`, data);
+  }
+
   // Product
   getListProduct(){
     return this.http.get(this.BASE_URL+'/api/goods/Listproducts')
@@ -86,6 +94,10 @@ export class ProductServiceService {
     return this.http.post<any>(this.BASE_URL + `/api/goods/AddWonLoss`, data);
   }
 
+  uploadBaseFile(data: any):Observable<any>{
+    return this.http.post<any>(this.BASE_URL+ '/api/goods/basePrice', data);
+  }
+
 
   // Search
   searchRoundPlan(data: any):Observable<any>{
@@ -104,6 +116,14 @@ export class ProductServiceService {
     return this.http.get<any>(this.BASE_URL + `/api/goods/SearchWin/${id}`)
   }
 
+  searchTender(data: any):Observable<any>{
+    return this.http.post<any>(this.BASE_URL + `/api/goods/searchTender`, data)
+  }
+
+  searchColorMachineReadings(id: any):Observable<any>{
+    return this.http.get<any>(this.BASE_URL + `/api/goods/SearchColormachinereadingById/${id}`)
+  }
+
 
   // List
   ListBids():Observable<any>{
@@ -116,6 +136,31 @@ export class ProductServiceService {
 
   Login(data: any):Observable<any>{
     return this.http.post<any>(this.BASE_URL+ `/api/admin/login`, data)
+  }
+
+  ListTender():Observable<any>{
+    return this.http.get<any>(this.BASE_URL+ "/api/goods/ListBasePrice")
+  }
+
+  // DELETE
+
+  deleteColorReadings(id: any):Observable<any>{
+    return this.http.get(this.BASE_URL + `/api/goods/deleteColorReadings/${id}`)
+  }
+
+  deleteBids(id: any):Observable<any>{
+    return this.http.get(this.BASE_URL+ `/api/goods/deleteBids/${id}`)
+  }
+
+
+  // Update
+
+  updateBidsById(data: any, id: any):Observable<any>{
+    return this.http.post(this.BASE_URL+ `/api/goods/updateBids/${id}`, data)
+  }
+  
+  updateColorMachineById(data: any, id: any):Observable<any>{
+    return this.http.post(this.BASE_URL+ `/api/goods/updateColorMachineById/${id}`, data)
   }
 
 }

@@ -1,8 +1,13 @@
+body{
+    display: flex;
+    flex-direction: column;
+    height: auto;
+}
+
 .mainContainer{
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
+    display: grid;
 }
 
 /* Header */
@@ -31,7 +36,6 @@
 .container{
     min-width: 100%;
     width: 100%;
-    height: 100%;
     display: flex;
     margin: 0;
     padding: 0;
@@ -42,7 +46,6 @@
 /* Side bar */
 .container .sidebar{
     width: 20%;
-    height: 100%;
     padding: 10px;
     display: flex;
     flex-direction: column;
