@@ -43,18 +43,31 @@ export class UploadBidComponent implements OnInit {
   uploadFile(event: any) {
     this.file = event.target.files[0];
     let fileReader = new FileReader();
-    fileReader.readAsArrayBuffer(this.file);
     fileReader.onload = (e) => {
-      this.arrayBuffer = fileReader.result;
-      var data = new Uint8Array(this.arrayBuffer);
-      var arr = new Array();
-      for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
-      var bstr = arr.join("");
-      var workbook = XLSX.read(bstr, { type: "binary" });
-      var first_sheet_name = workbook.SheetNames[0];
-      var worksheet = workbook.Sheets[first_sheet_name];
-      this.arrayList = XLSX.utils.sheet_to_json(worksheet, { raw: true });
-    }
+      let arrayBuffer = fileReader.result as ArrayBuffer;
+      let workbook = XLSX.read(arrayBuffer, { type: 'array' });
+      let firstSheetName = workbook.SheetNames[0];
+      let worksheet = workbook.Sheets[firstSheetName];
+      this.arrayList = XLSX.utils.sheet_to_json(worksheet, { raw: true, defval: '' });
+  
+      this.arrayList.forEach((row: any) => {
+        if (row.date && !isNaN(row.date)) {
+          let excelDate = parseFloat(row.date);
+  
+          let dateObject = XLSX.SSF.parse_date_code(excelDate);
+          let formattedDate = new Date(
+            dateObject.y,
+            dateObject.m - 1,
+            dateObject.d
+          ).toISOString().split('T')[0];
+  
+          row.date = formattedDate;
+        }
+      });
+    };
+    fileReader.readAsArrayBuffer(this.file);
+
+    console.log("arrayList",this.arrayList)
   }
 
   submit(){

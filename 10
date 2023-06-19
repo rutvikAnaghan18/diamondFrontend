@@ -1,0 +1,10 @@
++ ts-node@10.9.1
++ @angular/compiler-cli@16.0.0
++ typescript@5.0.4
+updated 3 packages and audited 1232 packages in 13.69s
+
+112 packages are looking for funding
+  run `npm fund` for details
+
+found 1 high severity vulnerability
+  run `npm audit fix` to fix them, or `npm audit` for details

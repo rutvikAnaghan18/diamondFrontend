@@ -70,8 +70,12 @@ export class ProductServiceService {
 
   // Upload File
 
-  uploadFile(data: any):Observable<any>{
-    return this.http.post<any>(this.BASE_URL + '/api/goods/AddRAP', data);
+  uploadFancyFile(data: any):Observable<any>{
+    return this.http.post<any>(this.BASE_URL + '/api/goods/AddFancyRAP', data);
+  }
+
+  uploadRoundFile(data: any):Observable<any>{
+    return this.http.post<any>(this.BASE_URL + '/api/goods/AddRoundRAP', data);
   }
 
   uploadBidFile(data: any):Observable<any>{
@@ -84,8 +88,12 @@ export class ProductServiceService {
 
 
   // Search
-  searchPlan(data: any):Observable<any>{
-    return this.http.post<any>(this.BASE_URL+ '/api/goods/SearchRAP', data);
+  searchRoundPlan(data: any):Observable<any>{
+    return this.http.post<any>(this.BASE_URL+ '/api/goods/SearchRoundRAP', data);
+  }
+  
+  searchFancyPlan(data: any):Observable<any>{
+    return this.http.post<any>(this.BASE_URL+ '/api/goods/SearchFancyRAP', data);
   }
 
   searchBid(id: any):Observable<any>{
