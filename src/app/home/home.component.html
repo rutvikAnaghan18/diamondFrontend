@@ -7,18 +7,18 @@
         <div class="stoneFields">
             <div class="stoneId flex-col width-300 mrg-25 mrg-botm-15">
                 <label for="" class="stone-font">Tender Name</label>
-                <input type="text" placeholder="Enter Tender Name" (keydown.enter)="focusNext($event, stoneInput)" [(ngModel)]="tenderName"
-                    class="form-control stoneField">
+                <input type="text" placeholder="Enter Tender Name" (keydown.enter)="focusNext($event, stoneInput)"
+                    [(ngModel)]="tenderName" class="form-control stoneField">
             </div>
             <div class="stoneWeights flex-col width-300 mrg-25">
                 <label for="" class="stone-font">Date</label>
-                <input type="date" placeholder="Enter Stone Weight" (keydown.enter)="focusNext($event, weightInput)" [formControl]="date" class="form-control stoneField"
-                    name="" id="">
+                <input type="date" placeholder="Enter Stone Weight" (keydown.enter)="focusNext($event, weightInput)"
+                    [formControl]="date" class="form-control stoneField" name="" id="">
             </div>
             <div class="stoneFL flex-col width-300 mrg-25">
                 <label for="" class="stone-font">Time</label>
-                <input type="time" placeholder="Enter Stone FL" (keydown.enter)="focusNext($event, weightInput)" [formControl]="time" class="form-control stoneField"
-                    name="" id="">
+                <input type="time" placeholder="Enter Stone FL" (keydown.enter)="focusNext($event, weightInput)"
+                    [formControl]="time" class="form-control stoneField" name="" id="">
             </div>
             <div class="stoneTention" style="margin-bottom: 16px;">
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -29,23 +29,26 @@
         <div class="stoneFields">
             <div class="stoneId flex-col width-300 mrg-25">
                 <label for="" class="stone-font">Stone Id</label>
-                <input type="number" placeholder="Enter Stone Id" #stoneInput (keydown.enter)="focusNext($event, weightInput)" (change)="findTender()" [(ngModel)]="stoneId" class="form-control stoneField"
-                    name="" id="">
+                <input type="number" placeholder="Enter Stone Id" #stoneInput
+                    (keydown.enter)="focusNext($event, weightInput)" (change)="findTender()" [(ngModel)]="stoneId"
+                    class="form-control stoneField" name="" id="">
             </div>
             <div class="stoneWeights flex-col width-300 mrg-25">
                 <label for="" class="stone-font">Stone Weight</label>
-                <input type="text" placeholder="Enter Stone Weight" #weightInput (keydown.enter)="focusNext($event, stoneFLInput)" [(ngModel)]="stoneWeight"
+                <input type="text" placeholder="Enter Stone Weight" #weightInput
+                    (keydown.enter)="focusNext($event, stoneFLInput)" [(ngModel)]="stoneWeight"
                     class="form-control stoneField" name="" id="">
             </div>
             <div class="stoneFL flex-col width-300 mrg-25">
                 <label for="" class="stone-font">Stone FL</label>
-                <input type="text" placeholder="Enter Stone FL" #stoneFLInput (keydown.enter)="focusNext($event, tentionInput)" [(ngModel)]="stoneFL" class="form-control stoneField"
-                    name="" id="">
+                <input type="text" placeholder="Enter Stone FL" #stoneFLInput
+                    (keydown.enter)="focusNext($event, tentionInput)" [(ngModel)]="stoneFL"
+                    class="form-control stoneField" name="" id="">
             </div>
             <div class="stoneFL flex-col width-300 mrg-25">
                 <label for="" class="stone-font">Tention</label>
-                <input type="text" placeholder="Enter Tention" #tentionInput [(ngModel)]="tention" class="form-control stoneField"
-                    name="" id="">
+                <input type="text" placeholder="Enter Tention" #tentionInput [(ngModel)]="tention"
+                    class="form-control stoneField" name="" id="">
             </div>
         </div>
 
@@ -74,8 +77,9 @@
                                 <div class="flex-col mrg-10">
                                     <mat-form-field class="color-machine" appearance="fill">
                                         <mat-label>Result</mat-label>
-                                        <input matInput placeholder="" #resultInput (keydown.enter)="focusNext($event, colorMeasureInput)" [(ngModel)]="colorMeasure.result"
-                                            value="{{colorMeasure.result}}">
+                                        <input matInput placeholder="" #resultInput
+                                            (keydown.enter)="focusNext($event, colorMeasureInput)"
+                                            [(ngModel)]="colorMeasure.result" value="{{colorMeasure.result}}">
                                     </mat-form-field>
                                 </div>
                             </td>
@@ -83,7 +87,9 @@
                                 <div class="flex-col mrg-10">
                                     <mat-form-field class="color-machine" appearance="fill">
                                         <mat-label>Colour Measure</mat-label>
-                                        <input matInput placeholder="" #colorMeasureInput (keydown.enter)="focusNext($event, readingInput)" [(ngModel)]="colorMeasure.colorMeasure"
+                                        <input matInput placeholder="" #colorMeasureInput
+                                            (keydown.enter)="focusNext($event, readingInput)"
+                                            [(ngModel)]="colorMeasure.colorMeasure"
                                             value="{{colorMeasure.colorMeasure}}">
                                     </mat-form-field>
                                 </div>
@@ -92,8 +98,9 @@
                                 <div class="flex-col mrg-10">
                                     <mat-form-field class="color-machine" appearance="fill">
                                         <mat-label>Reading</mat-label>
-                                        <input matInput placeholder="" #readingInput (keydown.enter)="focusNext($event, commentInput)" [(ngModel)]="colorMeasure.reading"
-                                            value="{{colorMeasure.reading}}">
+                                        <input matInput placeholder="" #readingInput
+                                            (keydown.enter)="focusNext($event, commentInput)"
+                                            [(ngModel)]="colorMeasure.reading" value="{{colorMeasure.reading}}">
                                     </mat-form-field>
                                 </div>
                             </td>
@@ -101,8 +108,8 @@
                                 <div class="flex-col mrg-10">
                                     <mat-form-field class="color-machine" appearance="fill">
                                         <mat-label>Comment</mat-label>
-                                        <input matInput placeholder="" #commentInput (keydown.enter)="addColorMeasure()" [(ngModel)]="colorMeasure.comment"
-                                            value="{{colorMeasure.comment}}">
+                                        <input matInput placeholder="" #commentInput (keydown.enter)="addColorMeasure()"
+                                            [(ngModel)]="colorMeasure.comment" value="{{colorMeasure.comment}}">
                                     </mat-form-field>
                                 </div>
                             </td>
@@ -138,14 +145,15 @@
                                 <th scope="col" style="width:112px;">Weight</th>
                                 <th scope="col" style="width:110px;">Color</th>
                                 <th scope="col" style="width:110px;">Purity</th>
-                                <th scope="col" style="width:110px;" *ngIf="isSearchHide == true">C/P/S</th>
-                                <th scope="col" style="width: 110px; padding-right: 0px;" *ngIf="isSearchHide == true">
+                                <th scope="col" style="width:110px;">C/P/S</th>
+                                <th scope="col" style="width: 110px; padding-right: 0px;">
                                     RAP Price/CT</th>
-                                <th scope="col" style="width:110px;" *ngIf="isSearchHide == true">Discount(%)</th>
-                                <th scope="col" style="width:110px;" *ngIf="isSearchHide == true">Price/CT</th>
-                                <th scope="col" style="width:150px;" *ngIf="isSearchHide == true">Total</th>
-                                <th scope="col" *ngIf="isSearchHide == true"
-                                    style="border-top-right-radius: 15px; border-top: none; text-align: center;">Action</th>
+                                <th scope="col" style="width:110px;">Discount(%)</th>
+                                <th scope="col" style="width:110px;">Price/CT</th>
+                                <th scope="col" style="width:150px;">Total</th>
+                                <th scope="col"
+                                    style="border-top-right-radius: 15px; border-top: none; text-align: center;">Action
+                                </th>
                             </tr>
                         </thead>
                         <tbody class="plan-tbody">
@@ -155,24 +163,29 @@
                                     <div *ngFor="let plan of planFormTable[k]">
                                         <div class="plan-input">
                                             <div class="flex-col mrg-10">
-                                                <mat-form-field appearance="fill">
+                                                <!-- <mat-form-field appearance="fill">
                                                     <mat-label>Shape</mat-label>
                                                     <mat-select [(ngModel)]="plan.shape">
                                                         <mat-option *ngFor="let shape of shapes" [value]="shape.value">
                                                             {{shape.value}}
                                                         </mat-option>
                                                     </mat-select>
+                                                </mat-form-field> -->
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>Shape</mat-label>
+                                                    <input matInput placeholder="" #shapeInput (keydown.enter)="focusNext2($event, planWeightInput)" [(ngModel)]="plan.shape"
+                                                        value="{{plan.shape}}">
                                                 </mat-form-field>
                                             </div>
                                             <div class="flex-col mrg-10">
                                                 <mat-form-field class="example-full-width" appearance="fill">
                                                     <mat-label>Weight</mat-label>
-                                                    <input matInput placeholder="" [(ngModel)]="plan.weight"
+                                                    <input matInput placeholder="" #planWeightInput (keydown.enter)="focusNext2($event, colorInput)" [(ngModel)]="plan.weight"
                                                         value="{{plan.weight}}">
                                                 </mat-form-field>
                                             </div>
                                             <div class="flex-col mrg-10">
-                                                <mat-form-field appearance="fill" *ngIf="plan.isColorMannual == false">
+                                                <!-- <mat-form-field appearance="fill" *ngIf="plan.isColorMannual == false">
                                                     <mat-label>Color</mat-label>
                                                     <mat-select [(ngModel)]="plan.color"
                                                         (selectionChange)="changeColor(plan)">
@@ -180,58 +193,59 @@
                                                             {{color.value}}
                                                         </mat-option>
                                                     </mat-select>
-                                                </mat-form-field>
-                                                <mat-form-field class="example-full-width"
-                                                    *ngIf="plan.isColorMannual == true" appearance="fill">
+                                                </mat-form-field> -->
+                                                <mat-form-field class="example-full-width" appearance="fill">
                                                     <mat-label>Color</mat-label>
-                                                    <input matInput placeholder="" [(ngModel)]="plan.color"
+                                                    <input matInput placeholder="" #colorInput (keydown.enter)="focusNext2($event, purityInput)" [(ngModel)]="plan.color"
                                                         value="{{plan.color}}">
                                                 </mat-form-field>
                                             </div>
                                             <div class="flex-col mrg-10">
                                                 <mat-form-field class="example-full-width" appearance="fill">
                                                     <mat-label>Purity</mat-label>
-                                                    <input matInput placeholder="" [(ngModel)]="plan.purity"
-                                                        value="{{plan.purity}}">
+                                                    <input matInput placeholder="" #purityInput (keydown.enter)="searchPlan(plan, $event, cpsInput)"
+                                                        [(ngModel)]="plan.purity" value="{{plan.purity}}">
                                                 </mat-form-field>
-                                            </div>
-                                            <div *ngIf="plan.search == false" class="search-div">
-                                                <button class="btn btn-primary search-btn"
-                                                    (click)="searchPlan(plan)">Search</button>
                                             </div>
 
-                                            <div class="flex-col mrg-10" *ngIf="plan.search == true">
+                                            <div class="flex-col mrg-10">
                                                 <mat-form-field class="example-full-width" appearance="fill">
                                                     <mat-label>C/P/S</mat-label>
-                                                    <input matInput placeholder="" #cpsInput (keydown.enter)="focusNext($event, rapPriceInput.nativeElement)" [(ngModel)]="plan.cps"
-                                                        value="{{plan.cps}}">
+                                                    <input matInput placeholder="" #cpsInput
+                                                        (keydown.enter)="focusNext2($event, rapPriceInput)"
+                                                        [(ngModel)]="plan.cps" value="{{plan.cps}}">
                                                 </mat-form-field>
                                             </div>
-                                            <div class="flex-col mrg-10" *ngIf="plan.search == true">
+                                            <div class="flex-col mrg-10">
                                                 <mat-form-field class="example-full-width" appearance="fill">
                                                     <mat-label>RAP Price/CT</mat-label>
-                                                    <input matInput placeholder="" #rapPriceInput (keydown.enter)="focusNext($event, discountInput.nativeElement)" [(ngModel)]="plan.rapPrice"
-                                                        value="{{plan.rapPrice}}">
+                                                    <input matInput placeholder="" #rapPriceInput
+                                                        (keydown.enter)="focusNext2($event, discountInput)"
+                                                        [(ngModel)]="plan.rapPrice" value="{{plan.rapPrice}}">
                                                 </mat-form-field>
                                             </div>
-                                            <div class="flex-col mrg-10" *ngIf="plan.search == true">
+                                            <div class="flex-col mrg-10">
                                                 <mat-form-field class="example-full-width" appearance="fill">
                                                     <mat-label>Discount</mat-label>
-                                                    <input matInput placeholder="" #discountInput (keydown.enter)="focusNext($event, priceInput.nativeElement)" (change)="addDiscount(plan)"
-                                                        [(ngModel)]="plan.discount" value="{{plan.discount}}">
+                                                    <input matInput placeholder="" #discountInput
+                                                        (keydown.enter)="focusNext2($event, priceInput)"
+                                                        (change)="addDiscount(plan)" [(ngModel)]="plan.discount"
+                                                        value="{{plan.discount}}">
                                                 </mat-form-field>
                                             </div>
-                                            <div class="flex-col mrg-10" *ngIf="plan.search == true">
+                                            <div class="flex-col mrg-10">
                                                 <mat-form-field class="example-full-width" appearance="fill">
                                                     <mat-label>Price/CT</mat-label>
-                                                    <input matInput placeholder="" #priceInput (keydown.enter)="focusNext($event, totalInput.nativeElement)" [(ngModel)]="plan.priceCT"
-                                                        value="{{plan.priceCT}}">
+                                                    <input matInput placeholder="" #priceInput
+                                                        (keydown.enter)="focusNext2($event, totalInput)"
+                                                        [(ngModel)]="plan.priceCT" value="{{plan.priceCT}}">
                                                 </mat-form-field>
                                             </div>
-                                            <div class="flex-col" *ngIf="plan.search == true">
+                                            <div class="flex-col">
                                                 <mat-form-field class="example-full-width" appearance="fill">
                                                     <mat-label>Total Price</mat-label>
-                                                    <input matInput placeholder="" #totalInput (keydown.enter)="SubmitPlan(k)" [(ngModel)]="plan.totalPrice"
+                                                    <input matInput placeholder="" #totalInput
+                                                        (keydown.enter)="SubmitPlan(k)" [(ngModel)]="plan.totalPrice"
                                                         value="{{plan.totalPrice}}">
                                                 </mat-form-field>
                                             </div>
@@ -262,7 +276,7 @@
         </div>
 
         <div class="row plan-row">
-            <div class="select-plan" *ngIf="planDetailArray && planShow">
+            <div class="select-plan" *ngIf="planDetailArray.length && planShow">
                 <section class="select-section" *ngFor="let plan of planDetailArray, let i = index;">
                     <mat-checkbox class="select-margin" [(ngModel)]="plan.isSelected"></mat-checkbox>
                     <div class="plan-detail">

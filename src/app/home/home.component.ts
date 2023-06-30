@@ -4,10 +4,6 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ProductServiceService } from '../product-service.service';
-import { ThemePalette } from '@angular/material/core';
-
-import * as XLSX from 'xlsx';
-import { async } from 'rxjs';
 
 interface Shape {
   id: string;
@@ -30,11 +26,17 @@ export class HomeComponent implements OnInit {
   @ViewChild('colorMeasureInput') colorMeasureInput: ElementRef;
   @ViewChild('readingInput') readingInput: ElementRef;
   @ViewChild('commentInput') commentInput: ElementRef;
-  @ViewChild('cpsInput') cpsInput: ElementRef;
-  @ViewChild('rapPriceInput') rapPriceInput: ElementRef;
-  @ViewChild('discountInput') discountInput: ElementRef;
-  @ViewChild('priceInput') priceInput: ElementRef;
-  @ViewChild('totalInput') totalInput: ElementRef;
+
+  @ViewChild('shapeInput') shapeInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('planWeightInput') planWeightInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('colorInput') colorInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('purityInput') purityInput!: ElementRef<HTMLInputElement>;
+
+  @ViewChild('cpsInput') cpsInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('rapPriceInput') rapPriceInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('discountInput') discountInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('priceInput') priceInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('totalInput') totalInput!: ElementRef<HTMLInputElement>;
 
   time: FormControl;
   date: FormControl;
@@ -240,6 +242,11 @@ export class HomeComponent implements OnInit {
     nextInput.focus();
   }
 
+  focusNext2(event: any, nextInput: HTMLInputElement): void {
+    event.preventDefault();
+    nextInput.focus();
+  }
+
 
   verifyToken() {
     const token = sessionStorage.getItem('token');
@@ -416,9 +423,7 @@ export class HomeComponent implements OnInit {
     // }
   }
 
-  searchPlan(plan: any) {
-
-    console.log(plan)
+  searchPlan(plan: any, event: any, nextInput: HTMLInputElement) {
 
     var searchObj = {
       shape: plan.shape,
@@ -439,39 +444,37 @@ export class HomeComponent implements OnInit {
 
       if (searchObj.shape == "RD") {
         searchObj.shape = "BR"
-      }else if(searchObj.shape == "BR"){
+      } else if (searchObj.shape == "BR") {
         searchObj.shape = "BR"
-      }else{
+      } else {
         searchObj.shape = "PS"
       }
 
       if (searchObj.shape == "BR") {
         this.diamondService.searchRoundPlan(searchObj).subscribe((res: any) => {
           if (res && res.length) {
-            plan[plan.length - 1][plan[plan.length - 1].length - 1].rapPrice = res[0].price
-            this.planFormTable = plan
+            plan.rapPrice = res[0].price
             this.isSearchHide = true
-            plan[plan.length - 1][plan[plan.length - 1].length - 1].search = true;
-  
+            event.preventDefault();
+            nextInput.focus();
           } else {
             this.toastr.error("Record Not Found")
           }
         })
-      }else{
+      } else {
         this.diamondService.searchFancyPlan(searchObj).subscribe((res: any) => {
           if (res && res.length) {
-            plan[plan.length - 1][plan[plan.length - 1].length - 1].rapPrice = res[0].price
-            this.planFormTable = plan
+            plan.rapPrice = res[0].price
             this.isSearchHide = true
-            plan[plan.length - 1][plan[plan.length - 1].length - 1].search = true;
-  
+            event.preventDefault();
+            nextInput.focus();
           } else {
             this.toastr.error("Record Not Found")
           }
         })
       }
 
-      
+
     }
   }
 
@@ -517,16 +520,17 @@ export class HomeComponent implements OnInit {
       var bidArr = new Array();
 
       for (let i = 0; i < this.planDetailArray.length; i++) {
-        if(this.planDetailArray[i].isSelected === true){
+        if (this.planDetailArray[i].isSelected === true) {
           bidArr.push({
             stoneId: this.stoneId,
+            TenderName: this.tenderName,
             stoneWeight: this.stoneWeight,
             basePricePerCT: this.basePriceArr[0].basePricePerCT,
             totalBasePrice: this.basePriceArr[0].basePrice,
-            bidPricePerCT: Number(this.planDetailArray[i].finalTotal)/this.stoneWeight,
+            bidPricePerCT: Number(this.planDetailArray[i].finalTotal) / this.stoneWeight,
             bidPrice: this.planDetailArray[i].finalTotal
           })
-        }        
+        }
       }
 
       var colorReadingsArr = new Array();
@@ -546,17 +550,17 @@ export class HomeComponent implements OnInit {
         if (colorResponse.Response && colorResponse.Response.code === 0) {
           isColorReadingPost = true;
         }
-    
+
         const bidResponse = await this.diamondService.addBids(bidArr).toPromise();
         if (bidResponse.Response && bidResponse.Response.code === 0) {
           isBidsPost = true;
         }
-    
+
         const tenderResponse = await this.diamondService.addNewProduct(obj[0]).toPromise();
         if (tenderResponse.Response && tenderResponse.Response.code === 0) {
           isTenderPost = true;
         }
-    
+
         if (isBidsPost && isColorReadingPost && isTenderPost) {
           this.toastr.success("Tender Successfully Saved");
           this.resetValues();
@@ -618,16 +622,16 @@ export class HomeComponent implements OnInit {
       var bidArr = new Array();
 
       for (let i = 0; i < this.planDetailArray.length; i++) {
-        if(this.planDetailArray[i].isSelected === true){
+        if (this.planDetailArray[i].isSelected === true) {
           bidArr.push({
             stoneId: this.stoneId,
             stoneWeight: this.stoneWeight,
             basePricePerCT: this.basePriceArr[0].basePricePerCT,
             totalBasePrice: this.basePriceArr[0].basePrice,
-            bidPricePerCT: (Number(this.planDetailArray[i].finalTotal)/this.stoneWeight).toFixed(2),
+            bidPricePerCT: (Number(this.planDetailArray[i].finalTotal) / this.stoneWeight).toFixed(2),
             bidPrice: this.planDetailArray[i].finalTotal
           })
-        }        
+        }
       }
 
       var colorReadingsArr = new Array();
@@ -649,21 +653,21 @@ export class HomeComponent implements OnInit {
             isColorReadingPost = true;
           }
         }
-        
+
         if (bidArr.length > 0) {
           const bidResponse = await this.diamondService.updateBidsById(bidArr[0], this.stoneId).toPromise();
           if (bidResponse.Response && bidResponse.Response.code === 0) {
             isBidsPost = true;
           }
-        }else {
+        } else {
           isBidsPost = false;
         }
-    
+
         const tenderResponse = await this.diamondService.updateProduct(obj[0], this.productId).toPromise();
         if (tenderResponse.Response && tenderResponse.Response.code === 0) {
           isTenderPost = true;
         }
-    
+
         if (isBidsPost && isColorReadingPost && isTenderPost) {
           this.toastr.success("Tender Successfully Saved");
           this.resetValues();
@@ -719,7 +723,7 @@ export class HomeComponent implements OnInit {
   }
 
   getProductById(id: any) {
-    
+
     this.diamondService.getProductById(id).subscribe((res: any) => {
 
       this.diamondService.searchColorMachineReadings(res.stoneId).subscribe((res) => {
@@ -754,9 +758,9 @@ export class HomeComponent implements OnInit {
         }])
       }
       this.planTable = res.plans
-      
+
       var totalPricePlan = 0
-      
+
       console.log(this.planTable)
       this.planDetailArray = [];
       for (let i = 0; i < this.planTable.length; i++) {
@@ -777,7 +781,7 @@ export class HomeComponent implements OnInit {
       //   this.planShow = true;
       //   this.planDetailArray[index].totalPlanPrice = totalPricePlan
       // } else {
-        
+
       // }
     })
   }
@@ -823,7 +827,7 @@ export class HomeComponent implements OnInit {
       var tenderObj = {
         stoneId: this.stoneId
       };
-  
+
       this.diamondService.searchTender(tenderObj).subscribe(async (res) => {
         this.basePriceArr = await res;
         console.log(this.basePriceArr);
@@ -835,5 +839,5 @@ export class HomeComponent implements OnInit {
       });
     }
   }
-  
+
 }

@@ -111,19 +111,21 @@ export class MasterComponent implements OnInit {
   // }
 
   async deleteProduct(prod: any) {
+    console.log("Product", prod)
     var id = prod.stoneId;
     var isColorReadingsDeleted = false;
     var isBidsDeleted = false;
     var isProductDeleted = false;
+    var name = prod.TenderName
   
     if (id) {
       try {
-        const bidsResponse = await this.diamondService.deleteBids(id).toPromise();
+        const bidsResponse = await this.diamondService.deleteBids(id, name).toPromise();
         if (bidsResponse.Response && bidsResponse.Response.code === 0) {
           isBidsDeleted = true;
         }
   
-        const colorReadingsResponse = await this.diamondService.deleteColorReadings(id).toPromise();
+        const colorReadingsResponse = await this.diamondService.deleteColorReadings(id, name).toPromise();
         if (colorReadingsResponse.Response && colorReadingsResponse.Response.code === 0) {
           isColorReadingsDeleted = true;
         }

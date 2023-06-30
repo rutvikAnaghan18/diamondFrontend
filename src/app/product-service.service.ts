@@ -8,8 +8,8 @@ import { Observable } from 'rxjs';
 })
 export class ProductServiceService {
 
-  // BASE_URL: String = "http://5.183.9.118:5000"
-  BASE_URL: String = "http://localhost:3000"
+  BASE_URL: String = "http://5.183.9.118:5000"
+  // BASE_URL: String = "http://localhost:3000"
 
   constructor(private http: HttpClient) { 
   }
@@ -144,12 +144,12 @@ export class ProductServiceService {
 
   // DELETE
 
-  deleteColorReadings(id: any):Observable<any>{
-    return this.http.get(this.BASE_URL + `/api/goods/deleteColorReadings/${id}`)
+  deleteColorReadings(id: any, name: any):Observable<any>{
+    return this.http.get(this.BASE_URL + `/api/goods/deleteColorReadings/${id}/${name}`)
   }
 
-  deleteBids(id: any):Observable<any>{
-    return this.http.get(this.BASE_URL+ `/api/goods/deleteBids/${id}`)
+  deleteBids(id: any, name: any):Observable<any>{
+    return this.http.get(this.BASE_URL+ `/api/goods/deleteBids/${id}/${name}`)
   }
 
 
